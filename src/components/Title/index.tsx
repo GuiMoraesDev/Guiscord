@@ -1,27 +1,17 @@
-import { ElementType, HTMLAttributes, PropsWithChildren } from "react";
-import appConfig from "styles/config.json";
+import { PropsWithChildren } from "react";
+import { TitleProps } from "./dtos";
 
-interface TitleProps extends HTMLAttributes<HTMLOrSVGElement> {
-  as?: ElementType;
-}
+import * as Styles from "./styles";
 
 const Title = ({
   children,
-  as: HtmlTag = "p",
+  as: HtmlTag,
+  ...props
 }: PropsWithChildren<TitleProps>): JSX.Element => {
   return (
-    <>
-      <HtmlTag>{children}</HtmlTag>
-      <style jsx>
-        {`
-          ${HtmlTag} {
-            color: ${appConfig.theme.colors.neutrals["000"]};
-            font-size: 24px;
-            font-weight: 600;
-          }
-        `}
-      </style>
-    </>
+    <Styles.Title as={HtmlTag} {...props}>
+      {children}
+    </Styles.Title>
   );
 };
 

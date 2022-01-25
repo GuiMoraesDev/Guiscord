@@ -38,6 +38,7 @@ TextField.defaultProps = {
   type: "text",
   size: "sm",
   rounded: "sm",
+  placeholder: 'Type here...',
 };
 
 export default TextField;

@@ -16,9 +16,9 @@ const Login = () => {
           <Title as="h2">Boas vindas de volta!</Title>
           <Text as='p'>{appConfig.name}</Text>
 
-          <TextField type="text" fullWidth />
+          <TextField type="text" placeholder="example@example.com" fullWidth />
 
-          <Button as="button" label="Entrar" size='md' fullWidth rounded='sm' />
+          <Button as="button" label="Login" size='md' fullWidth rounded='sm' />
         </Styles.Form>
       </Styles.Content>
     </Styles.Container>

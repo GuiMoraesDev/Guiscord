@@ -66,6 +66,8 @@ export default createGlobalStyle`
   a, button {
     background: transparent;
 
+    text-decoration: none;
+
     cursor: pointer;
 
     &[disabled] {

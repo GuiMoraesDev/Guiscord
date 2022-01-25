@@ -20,6 +20,16 @@ const Login = () => {
           <TextField type="text" placeholder="example@example.com" fullWidth />
 
           <Button as="button" label="Login" size="md" fullWidth rounded="sm" />
+
+          <Button
+            as="a"
+            variant="outline"
+            size="md"
+            fullWidth
+            rounded="sm"
+            label="Go to project"
+            href="https://github.com/GuiMoraesDev/imersao-react-aluracord"
+          />
         </Styles.Form>
 
         <Styles.UserCard>
@@ -31,43 +41,6 @@ const Login = () => {
           </Styles.ImageWrapper>
           <Text variant="highlighted">{username}</Text>
         </Styles.UserCard>
-
-        {/* Photo Area */}
-        {/* <Box
-          styleSheet={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            maxWidth: '200px',
-            padding: '16px',
-            backgroundColor: appConfig.theme.colors.neutrals[800],
-            border: '1px solid',
-            borderColor: appConfig.theme.colors.neutrals[999],
-            borderRadius: '10px',
-            flex: 1,
-            minHeight: '240px',
-          }}
-        >
-          <Image
-            styleSheet={{
-              borderRadius: '50%',
-              marginBottom: '16px',
-            }}
-            src={`https://github.com/${username}.png`}
-          />
-          <Text
-            variant="body4"
-            styleSheet={{
-              color: appConfig.theme.colors.neutrals[200],
-              backgroundColor: appConfig.theme.colors.neutrals[900],
-              padding: '3px 10px',
-              borderRadius: '1000px',
-            }}
-          >
-            {username}
-          </Text>
-        </Box> */}
-        {/* Photo Area */}
       </Styles.Content>
     </Styles.Container>
   );

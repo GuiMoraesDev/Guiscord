@@ -13,6 +13,8 @@ export const Button = styled.button<ButtonDefaultPropsThatMakeStyles>`
 
   transition: all ${({ theme }) => theme.transition.normal} ease-in-out;
 
+  margin: ${({ theme }) => theme.spaces.x1};
+
   ${({ theme, rounded }) => {
     return css`
       border-radius: ${theme.rounded[rounded || 'none']};
@@ -77,6 +79,19 @@ export const Button = styled.button<ButtonDefaultPropsThatMakeStyles>`
         &:hover {
           color: ${theme.colors.neutrals['050']};
           background-color: ${theme.colors.primary[600]};
+        }
+      `;
+
+    if (variant === 'outline')
+      return css`
+        color: ${theme.colors.neutrals['300']};
+        background-color: ${theme.colors.transparent};
+
+        border: 1px solid ${theme.colors.neutrals['300']};
+
+        &:hover {
+          color: ${theme.colors.neutrals['100']};
+          border-color: ${theme.colors.neutrals['100']};
         }
       `;
   }}

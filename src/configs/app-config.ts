@@ -38,7 +38,7 @@ const stickers = [
 ];
 
 const appConfig = {
-  name: 'Aluracord - Alura Matrix',
+  name: 'Guiscord',
   stickers,
 };
 

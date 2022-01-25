@@ -1,5 +1,3 @@
-import { HTMLAttributes } from 'react';
-
 import { DefaultTheme } from 'styled-components';
 
 export interface ButtonDefaultPropsThatMakeStyles {
@@ -12,22 +10,12 @@ export interface ButtonDefaultPropsThatMakeStyles {
 
 interface ButtonDefaultProps
   extends Omit<ButtonDefaultPropsThatMakeStyles, 'isDisabled'> {
+  as?: 'button' | 'a';
   label?: string;
   disabled?: boolean;
+  href?: string;
 }
 
-interface ButtonPropsAsButton
-  extends HTMLAttributes<HTMLButtonElement>,
-    ButtonDefaultProps {
-  as?: 'button';
-}
-
-interface ButtonPropsAsAnchor
-  extends HTMLAttributes<HTMLAnchorElement>,
-    ButtonDefaultProps {
-  as?: 'a';
-}
-
-type ButtonProps = ButtonPropsAsButton | ButtonPropsAsAnchor;
+type ButtonProps = ButtonDefaultProps;
 
 export type { ButtonProps };

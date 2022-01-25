@@ -1,11 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   background-color: ${({ theme }) => theme.colors.primary[500]};
-  background-image: url("https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg");
+  background-image: url('https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: multiply;

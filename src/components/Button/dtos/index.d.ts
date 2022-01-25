@@ -1,17 +1,17 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes } from 'react';
 
-import { DefaultTheme } from "styled-components";
+import { DefaultTheme } from 'styled-components';
 
 export interface ButtonDefaultPropsThatMakeStyles {
   fullWidth?: boolean;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  rounded?: keyof DefaultTheme["rounded"];
-  variant?: "primary" | "secondary" | "outline" | "neutral";
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  rounded?: keyof DefaultTheme['rounded'];
+  variant?: 'primary' | 'secondary' | 'outline' | 'neutral';
   isDisabled: boolean;
 }
 
 interface ButtonDefaultProps
-  extends Omit<ButtonDefaultPropsThatMakeStyles, "isDisabled"> {
+  extends Omit<ButtonDefaultPropsThatMakeStyles, 'isDisabled'> {
   label?: string;
   disabled?: boolean;
 }
@@ -19,13 +19,13 @@ interface ButtonDefaultProps
 interface ButtonPropsAsButton
   extends HTMLAttributes<HTMLButtonElement>,
     ButtonDefaultProps {
-  as?: "button";
+  as?: 'button';
 }
 
 interface ButtonPropsAsAnchor
   extends HTMLAttributes<HTMLAnchorElement>,
     ButtonDefaultProps {
-  as?: "a";
+  as?: 'a';
 }
 
 type ButtonProps = ButtonPropsAsButton | ButtonPropsAsAnchor;

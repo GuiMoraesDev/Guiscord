@@ -1,24 +1,25 @@
-import Title from "components/Title";
-import Text from "components/Text";
+import appConfig from 'configs/app-config';
 
-import * as Styles from "./styles";
-import appConfig from "configs/app-config";
-import TextField from "components/TextField";
-import Button from "components/Button";
+import Button from 'components/Button';
+import Text from 'components/Text';
+import TextField from 'components/TextField';
+import Title from 'components/Title';
+
+import * as Styles from './styles';
 
 const Login = () => {
-  const username = "peas";
+  const username = 'peas';
 
   return (
     <Styles.Container>
       <Styles.Content>
         <Styles.Form>
           <Title as="h2">Boas vindas de volta!</Title>
-          <Text as='p'>{appConfig.name}</Text>
+          <Text as="p">{appConfig.name}</Text>
 
           <TextField type="text" placeholder="example@example.com" fullWidth />
 
-          <Button as="button" label="Login" size='md' fullWidth rounded='sm' />
+          <Button as="button" label="Login" size="md" fullWidth rounded="sm" />
         </Styles.Form>
       </Styles.Content>
     </Styles.Container>

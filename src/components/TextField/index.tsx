@@ -1,7 +1,7 @@
-import React from "react";
-import { TextFieldProps } from "./dtos";
+import React from 'react';
 
-import * as Styles from "./styles";
+import { TextFieldProps } from './dtos';
+import * as Styles from './styles';
 
 const TextField = ({
   label,
@@ -9,15 +9,15 @@ const TextField = ({
   disabled,
   ...props
 }: TextFieldProps): JSX.Element => {
-  const [currentType, setCurrentType] = React.useState(type || "text");
+  const [currentType, setCurrentType] = React.useState(type || 'text');
 
   const handleToggleType = () => {
-    setCurrentType((state) => (state === "password" ? "text" : "password"));
+    setCurrentType((state) => (state === 'password' ? 'text' : 'password'));
   };
 
   const isDisabled = Boolean(disabled);
 
-  const HtmlTag = type === "textarea" ? "textarea" : "input";
+  const HtmlTag = type === 'textarea' ? 'textarea' : 'input';
 
   return (
     <Styles.TextFieldContainer isDisabled={isDisabled} {...props}>
@@ -35,9 +35,9 @@ const TextField = ({
 TextField.defaultProps = {
   fullWidth: false,
   disabled: false,
-  type: "text",
-  size: "sm",
-  rounded: "sm",
+  type: 'text',
+  size: 'sm',
+  rounded: 'sm',
   placeholder: 'Type here...',
 };
 

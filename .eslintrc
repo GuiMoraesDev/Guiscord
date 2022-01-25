@@ -1,0 +1,57 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": [
+    "prettier",
+    "@next/eslint-plugin-next",
+    "@typescript-eslint",
+    "eslint-plugin-import-helpers"
+  ],
+  "ignorePatterns": [
+    "node_modules",
+    "next.config.js"
+  ],
+  "rules": {
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": false
+        },
+        "groups": [
+          "/^next/",
+          "/^react/",
+          "module",
+          "/@shared/",
+          "/^components/",
+          "/^context/",
+          "/^errorBoundary/",
+          "/^helpers/",
+          "/^layouts/",
+          "/^pages/",
+          "/^patterns/",
+          "/^services/",
+          "/^dtos/",
+          "/^modules/",
+          "/^styles/",
+          "/routes/",
+          "/utils/",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ]
+        ]
+      }
+    ]
+  }
+}

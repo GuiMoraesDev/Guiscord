@@ -1,25 +1,25 @@
 interface TextPropsAsParagraph extends HTMLAttributes<HTMLParagraphElement> {
-  as?: "p";
+  as?: 'p';
 }
 
 interface TextPropsAsSpan extends HTMLAttributes<HTMLSpanElement> {
-  as?: "span";
+  as?: 'span';
 }
 
 interface TextPropsAsLi extends HTMLAttributes<HTMLLIElement> {
-  as?: "li";
+  as?: 'li';
 }
 
 interface TextPropsAsLabel extends HTMLAttributes<HTMLLabelElement> {
-  as?: "label";
+  as?: 'label';
 }
 
 interface TextPropsAsAnchor extends HTMLAttributes<HTMLAnchorElement> {
-  as?: "a";
+  as?: 'a';
 }
 
 interface TextPropsAsStrong extends HTMLAttributes<HTMLElement> {
-  as?: "strong";
+  as?: 'strong';
 }
 
 type TextProps =

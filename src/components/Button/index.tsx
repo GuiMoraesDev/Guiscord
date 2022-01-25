@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react";
-import { ButtonProps } from "./dtos";
+import { PropsWithChildren } from 'react';
 
-import * as Styles from "./styles";
+import { ButtonProps } from './dtos';
+import * as Styles from './styles';
 
 const Button = ({
   as: HtmlTag,
@@ -9,11 +9,7 @@ const Button = ({
   ...props
 }: PropsWithChildren<ButtonProps>): JSX.Element => {
   return (
-    <Styles.Button
-      {...props}
-      as={HtmlTag}
-      isDisabled={Boolean(props.disabled)}
-    >
+    <Styles.Button {...props} as={HtmlTag} isDisabled={Boolean(props.disabled)}>
       {label}
     </Styles.Button>
   );
@@ -21,9 +17,9 @@ const Button = ({
 
 Button.defaultProps = {
   fullWidth: false,
-  size: "sm",
-  rounded: "sm",
-  variant: "primary",
+  size: 'sm',
+  rounded: 'sm',
+  variant: 'primary',
 };
 
 export default Button;

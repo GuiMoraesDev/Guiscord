@@ -1,26 +1,18 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
   ::-webkit-scrollbar {
     width: 0.312vw;
   }
 
-  ::-webkit-scrollbar-track {
-    background-color: ${({theme}) => theme.colors.neutrals[200]};
-
-    border: var(--border);
-    border-radius: 0.156vw;
-  }
-
+  ::-webkit-scrollbar-track,
   ::-webkit-scrollbar-thumb {
-    background-color: ${({theme}) => theme.colors.neutrals[300]};
-
-    border-radius: 0.156vw;
+    background-color: ${({ theme }) => theme.colors.neutrals[200]};
   }
 
-  ::-webkit-search-cancel-button{
+  ::-webkit-search-cancel-button {
     -webkit-appearance: none;
-
+    
     width: 2rem;
     height: 2rem;
 
@@ -42,7 +34,7 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: ${({theme}) => theme.typography.fontFamily};
+    font-family: ${({ theme }) => theme.typography.fontFamily};
   }
 
   html,
@@ -64,7 +56,7 @@ export default createGlobalStyle`
   }
 
   body, input, button, textarea {
-    font-family: ${({theme}) => theme.typography.fontFamily};
+    font-family: ${({ theme }) => theme.typography.fontFamily};
   }
 
   h1, h2, h3, h4, h5, h6, strong {
@@ -82,7 +74,7 @@ export default createGlobalStyle`
   }
 
   input::placeholder {
-    color: ${({theme}) => theme.colors.neutrals[400]};
+    color: ${({ theme }) => theme.colors.neutrals[400]};
   }
 
   img {

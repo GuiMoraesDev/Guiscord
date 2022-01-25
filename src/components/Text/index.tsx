@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react";
-import { TextProps } from "./dtos";
+import { PropsWithChildren } from 'react';
 
-import * as Styles from "./styles";
+import { TextProps } from './dtos';
+import * as Styles from './styles';
 
 const Text = ({
   children,

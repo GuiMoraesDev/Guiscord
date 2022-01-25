@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react";
-import { TitleProps } from "./dtos";
+import { PropsWithChildren } from 'react';
 
-import * as Styles from "./styles";
+import { TitleProps } from './dtos';
+import * as Styles from './styles';
 
 const Title = ({
   children,

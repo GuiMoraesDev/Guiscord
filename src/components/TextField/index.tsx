@@ -38,6 +38,7 @@ TextField.defaultProps = {
   type: 'text',
   size: 'sm',
   rounded: 'sm',
+  variant: 'neutral',
   placeholder: 'Type here...',
 };
 

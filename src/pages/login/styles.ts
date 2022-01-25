@@ -40,7 +40,38 @@ export const Form = styled.form`
   text-align: center;
   margin-bottom: 32px;
 
+  .text-component {
+    margin-bottom: 32px;
+  }
+
   @media screen and (min-width: 480px) {
     width: 50%;
+  }
+`;
+
+export const UserCard = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 200px;
+  padding: 16px;
+  background-color: ${({ theme }) => theme.colors.neutrals[800]};
+  border: 1px solid;
+  border-color: ${({ theme }) => theme.colors.neutrals[999]};
+  border-radius: 10px;
+  flex: 1;
+  min-height: 240px;
+`;
+
+export const ImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  > img {
+    width: 100%;
+
+    border-radius: ${({ theme }) => theme.rounded.full};
   }
 `;

@@ -14,11 +14,10 @@
     "@typescript-eslint",
     "eslint-plugin-import-helpers"
   ],
-  "ignorePatterns": [
-    "node_modules",
-    "next.config.js"
-  ],
+  "ignorePatterns": ["node_modules", "next.config.js"],
   "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@next/next/no-img-element": "off",
     "import-helpers/order-imports": [
       "warn",
       {
@@ -45,11 +44,7 @@
           "/^styles/",
           "/routes/",
           "/utils/",
-          [
-            "parent",
-            "sibling",
-            "index"
-          ]
+          ["parent", "sibling", "index"]
         ]
       }
     ]

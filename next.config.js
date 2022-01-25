@@ -3,6 +3,10 @@ const StylelintPlugin = require('stylelint-webpack-plugin');
 module.exports = {
   reactStrictMode: true,
 
+  images: {
+    domains: ['github.com'],
+  },
+
   async redirects() {
     return [
       {

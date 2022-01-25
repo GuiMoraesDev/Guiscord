@@ -1,18 +1,27 @@
 import { PropsWithChildren } from 'react';
 
-import { TextProps } from './dtos';
+import { TextPropsDefault } from './dtos';
 import * as Styles from './styles';
 
 const Text = ({
   children,
   as: HtmlTag,
   ...props
-}: PropsWithChildren<TextProps>): JSX.Element => {
+}: PropsWithChildren<TextPropsDefault>): JSX.Element => {
   return (
-    <Styles.Text as={HtmlTag} {...props}>
+    <Styles.Text
+      as={HtmlTag}
+      className={`${props.className} text-component`}
+      {...props}
+    >
       {children}
     </Styles.Text>
   );
+};
+
+Text.defaultProps = {
+  size: 'body3',
+  variant: 'neutral',
 };
 
 export default Text;

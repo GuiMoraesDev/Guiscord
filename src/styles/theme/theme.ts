@@ -16,11 +16,11 @@ const theme: DefaultTheme = {
   spaces,
   typography,
   rounded: {
-    full: '8000rem',
-    lg: '1rem',
-    md: '0.8rem',
     none: 'none',
-    sm: '0.4rem',
+    sm: '4px',
+    md: '10px',
+    lg: '16px',
+    full: '10000px',
   },
 };
 

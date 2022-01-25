@@ -48,6 +48,44 @@ export const TextField = styled.input<TextFieldDefaultPropsThatMakeStyles>`
       `;
   }}
 
+  ${({ variant, theme }) => {
+    if (variant === 'neutral')
+      return css`
+        color: ${theme.colors.neutrals['000']};
+        background-color: ${theme.colors.neutrals['800']};
+
+        border: 1px solid ${theme.colors.neutrals[900]};
+
+        &:focus {
+          border: 1px solid ${theme.colors.neutrals[999]};
+        }
+      `;
+
+    if (variant === 'positive')
+      return css`
+        color: ${theme.colors.neutrals['000']};
+        background-color: ${theme.colors.neutrals['800']};
+
+        border: 1px solid ${theme.colors.neutrals[900]};
+
+        &:focus {
+          border: 1px solid ${theme.colors.neutrals[999]};
+        }
+      `;
+
+    if (variant === 'negative')
+      return css`
+        color: ${theme.colors.neutrals['000']};
+        background-color: ${theme.colors.neutrals['800']};
+
+        border: 1px solid ${theme.colors.neutrals[900]};
+
+        &:focus {
+          border: 1px solid ${theme.colors.neutrals[999]};
+        }
+      `;
+  }}
+
   ${({ size, theme }) => {
     if (size === 'xs')
       return css`

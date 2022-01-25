@@ -4,7 +4,7 @@ export interface TextFieldDefaultPropsThatMakeStyles {
   fullWidth?: boolean;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   rounded?: keyof DefaultTheme['rounded'];
-  variant?: 'primary' | 'secondary' | 'outline' | 'neutral';
+  variant?: 'positive' | 'negative' | 'neutral';
   isDisabled?: boolean;
   type?: 'textarea' | 'phone' | 'email' | 'password' | 'number' | 'text';
 }

@@ -1,33 +1,16 @@
-interface TextPropsAsParagraph extends HTMLAttributes<HTMLParagraphElement> {
-  as?: 'p';
+import { HTMLAttributes } from 'react';
+
+import { DefaultTheme } from 'styled-components';
+
+export interface TextDefaultPropsThatMakeStyles {
+  size?: keyof DefaultTheme['typography']['variants'];
+  variant?: 'neutral' | 'highlighted';
 }
 
-interface TextPropsAsSpan extends HTMLAttributes<HTMLSpanElement> {
-  as?: 'span';
+interface TextPropsDefault
+  extends TextDefaultPropsThatMakeStyles,
+    HTMLAttributes<HTMLElement> {
+  as?: 'p' | 'span' | 'li' | 'label' | 'strong';
 }
 
-interface TextPropsAsLi extends HTMLAttributes<HTMLLIElement> {
-  as?: 'li';
-}
-
-interface TextPropsAsLabel extends HTMLAttributes<HTMLLabelElement> {
-  as?: 'label';
-}
-
-interface TextPropsAsAnchor extends HTMLAttributes<HTMLAnchorElement> {
-  as?: 'a';
-}
-
-interface TextPropsAsStrong extends HTMLAttributes<HTMLElement> {
-  as?: 'strong';
-}
-
-type TextProps =
-  | TextPropsAsParagraph
-  | TextPropsAsSpan
-  | TextPropsAsLi
-  | TextPropsAsLabel
-  | TextPropsAsAnchor
-  | TextPropsAsStrong;
-
-export type { TextProps };
+export type { TextPropsDefault };

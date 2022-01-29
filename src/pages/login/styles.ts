@@ -14,6 +14,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -21,8 +22,8 @@ export const Content = styled.div`
   width: 100%;
   max-width: 700px;
   border-radius: 5px;
-  padding: 32px;
-  margin: 16px;
+  padding: ${({ theme }) => theme.spaces.x8};
+  margin: ${({ theme }) => theme.spaces.x4};
   box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
   background-color: ${({ theme }) => theme.colors.neutrals[700]};
 
@@ -74,4 +75,12 @@ export const ImageWrapper = styled.div`
 
     border-radius: ${({ theme }) => theme.rounded.full};
   }
+`;
+
+export const SocialMediaWrapper = styled.div`
+  position: absolute;
+  bottom: ${({ theme }) => theme.spaces.x8};
+  left: ${({ theme }) => theme.spaces.x8};
+
+  display: flex;
 `;

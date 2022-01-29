@@ -68,6 +68,13 @@ export const Button = styled.button<ButtonDefaultPropsThatMakeStyles>`
 
         padding: ${theme.spaces['x3']} ${theme.spaces['x6']};
       `;
+
+    if (size === 'square')
+      return css`
+        ${theme.typography.variants.body2};
+
+        padding: ${theme.spaces['x2']};
+      `;
   }}
 
   ${({ variant, theme }) => {

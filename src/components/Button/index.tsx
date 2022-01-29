@@ -7,7 +7,7 @@ import * as Styles from './styles';
 
 export interface ButtonDefaultPropsThatMakeStyles {
   fullWidth?: boolean;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'square';
   rounded?: keyof DefaultTheme['rounded'];
   variant?: 'primary' | 'secondary' | 'outline' | 'neutral';
   isDisabled: boolean;
@@ -33,7 +33,12 @@ const Button = ({
   const IconComponent = Icons[icon!];
 
   return (
-    <Styles.Button {...props} as={HtmlTag} isDisabled={Boolean(props.disabled)}>
+    <Styles.Button
+      as={HtmlTag}
+      {...props}
+      target={HtmlTag === 'a' ? '_blank' : undefined}
+      isDisabled={Boolean(props.disabled)}
+    >
       {icon && <IconComponent />}
       {label}
     </Styles.Button>

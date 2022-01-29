@@ -21,15 +21,32 @@ const Login = () => {
 
           <Button as="button" label="Login" size="md" fullWidth rounded="sm" />
 
-          <Button
-            as="a"
-            variant="outline"
-            size="md"
-            rounded="sm"
-            icon="Fa500Px"
-            label="Go to project"
-            href="https://github.com/GuiMoraesDev/imersao-react-aluracord"
-          />
+          <Styles.SocialMediaWrapper>
+            <Button
+              as="a"
+              variant="outline"
+              size="square"
+              rounded="full"
+              icon="FaGithub"
+              href="https://github.com/GuiMoraesDev/guiscord"
+            />
+            <Button
+              as="a"
+              variant="outline"
+              size="square"
+              rounded="full"
+              icon="FaTwitter"
+              href="https://twitter.com/GuiMoraesDev"
+            />
+            <Button
+              as="a"
+              variant="outline"
+              size="square"
+              rounded="full"
+              icon="FaLinkedin"
+              href="https://www.linkedin.com/in/guimoraesdev/"
+            />
+          </Styles.SocialMediaWrapper>
         </Styles.Form>
 
         <Styles.UserCard>

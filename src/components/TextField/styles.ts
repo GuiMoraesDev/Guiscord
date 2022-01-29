@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { TextFieldDefaultPropsThatMakeStyles } from './dtos';
+import { TextFieldDefaultPropsThatMakeStyles } from '.';
 
 export const TextFieldContainer = styled.div<TextFieldDefaultPropsThatMakeStyles>`
   display: block;

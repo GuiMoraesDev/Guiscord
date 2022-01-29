@@ -1,7 +1,20 @@
 import { PropsWithChildren } from 'react';
+import { HTMLAttributes } from 'react';
 
-import { TextPropsDefault } from './dtos';
+import { DefaultTheme } from 'styled-components';
+
 import * as Styles from './styles';
+
+export interface TextDefaultPropsThatMakeStyles {
+  size?: keyof DefaultTheme['typography']['variants'];
+  variant?: 'neutral' | 'highlighted';
+}
+
+interface TextPropsDefault
+  extends TextDefaultPropsThatMakeStyles,
+    HTMLAttributes<HTMLElement> {
+  as?: 'p' | 'span' | 'li' | 'label' | 'strong';
+}
 
 const Text = ({
   children,

@@ -1,7 +1,25 @@
 import React from 'react';
 
-import { TextFieldProps } from './dtos';
+import { DefaultTheme } from 'styled-components';
+
 import * as Styles from './styles';
+
+export interface TextFieldDefaultPropsThatMakeStyles {
+  fullWidth?: boolean;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  rounded?: keyof DefaultTheme['rounded'];
+  variant?: 'positive' | 'negative' | 'neutral';
+  isDisabled?: boolean;
+  type?: 'textarea' | 'phone' | 'email' | 'password' | 'number' | 'text';
+}
+
+interface TextFieldDefaultProps
+  extends Omit<TextFieldDefaultPropsThatMakeStyles, 'isDisabled'> {
+  label?: string;
+  disabled?: boolean;
+}
+
+type TextFieldProps = TextFieldDefaultProps;
 
 const TextField = ({
   label,
@@ -9,12 +27,6 @@ const TextField = ({
   disabled,
   ...props
 }: TextFieldProps): JSX.Element => {
-  const [currentType, setCurrentType] = React.useState(type || 'text');
-
-  const handleToggleType = () => {
-    setCurrentType((state) => (state === 'password' ? 'text' : 'password'));
-  };
-
   const isDisabled = Boolean(disabled);
 
   const HtmlTag = type === 'textarea' ? 'textarea' : 'input';
@@ -22,12 +34,7 @@ const TextField = ({
   return (
     <Styles.TextFieldContainer isDisabled={isDisabled} {...props}>
       {label && <Styles.Label>{label}</Styles.Label>}
-      <Styles.TextField
-        as={HtmlTag}
-        isDisabled={isDisabled}
-        type={currentType}
-        {...props}
-      />
+      <Styles.TextField as={HtmlTag} isDisabled={isDisabled} {...props} />
     </Styles.TextFieldContainer>
   );
 };

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { TextDefaultPropsThatMakeStyles } from './dtos';
+import { TextDefaultPropsThatMakeStyles } from '.';
 
 export const Text = styled.div<TextDefaultPropsThatMakeStyles>`
   ${({ theme, size }) => css`

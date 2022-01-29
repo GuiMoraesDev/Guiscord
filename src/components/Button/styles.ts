@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { ButtonDefaultPropsThatMakeStyles } from './dtos';
+import { ButtonDefaultPropsThatMakeStyles } from '.';
 
 export const Button = styled.button<ButtonDefaultPropsThatMakeStyles>`
   position: relative;

@@ -25,8 +25,8 @@ const Login = () => {
             as="a"
             variant="outline"
             size="md"
-            fullWidth
             rounded="sm"
+            icon="Fa500Px"
             label="Go to project"
             href="https://github.com/GuiMoraesDev/imersao-react-aluracord"
           />

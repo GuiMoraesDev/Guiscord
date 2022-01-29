@@ -38,7 +38,7 @@ const stickers = [
 ];
 
 const appConfig = {
-  name: 'Guiscord',
+  name: 'Guiscord - Matrix',
   stickers,
 };
 

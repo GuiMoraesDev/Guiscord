@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 
+import lodash from 'lodash';
 import { DefaultTheme } from 'styled-components';
 
 import * as Styles from './styles';
@@ -14,9 +15,12 @@ export interface TextFieldDefaultPropsThatMakeStyles {
 }
 
 interface TextFieldDefaultProps
-  extends Omit<TextFieldDefaultPropsThatMakeStyles, 'isDisabled'> {
+  extends Omit<TextFieldDefaultPropsThatMakeStyles, 'isDisabled'>,
+    HTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   label?: string;
   disabled?: boolean;
+  handleOnChange?(value: string): void;
+  handleDebounceOnChange?(value: string): void;
 }
 
 type TextFieldProps = TextFieldDefaultProps;
@@ -25,16 +29,42 @@ const TextField = ({
   label,
   type,
   disabled,
+  handleOnChange,
+  handleDebounceOnChange,
+  fullWidth,
   ...props
 }: TextFieldProps): JSX.Element => {
   const isDisabled = Boolean(disabled);
 
   const HtmlTag = type === 'textarea' ? 'textarea' : 'input';
 
+  const debounced = React.useRef(
+    lodash.debounce((newValue) => {
+      handleDebounceOnChange?.(newValue);
+    }, 200)
+  );
+
+  const handleChangeValue = (newValue: string) => {
+    handleOnChange?.(newValue);
+
+    if (handleDebounceOnChange) debounced.current(newValue);
+  };
+
   return (
-    <Styles.TextFieldContainer isDisabled={isDisabled} {...props}>
+    <Styles.TextFieldContainer isDisabled={isDisabled} fullWidth={fullWidth}>
       {label && <Styles.Label>{label}</Styles.Label>}
-      <Styles.TextField as={HtmlTag} isDisabled={isDisabled} {...props} />
+      <Styles.TextField
+        as={HtmlTag}
+        isDisabled={isDisabled}
+        fullWidth={fullWidth}
+        {...props}
+        onChange={(
+          event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        ) => {
+          props.onChange?.(event);
+          handleChangeValue(event.target.value);
+        }}
+      />
     </Styles.TextFieldContainer>
   );
 };

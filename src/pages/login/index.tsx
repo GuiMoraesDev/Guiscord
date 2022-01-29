@@ -1,3 +1,5 @@
+import React from 'react';
+
 import appConfig from 'configs/app-config';
 
 import Button from 'components/Button';
@@ -10,6 +12,10 @@ import * as Styles from './styles';
 const Login = () => {
   const username = 'peas';
 
+  const handleUsername = React.useCallback((value) => {
+    console.log(value);
+  }, []);
+
   return (
     <Styles.Container>
       <Styles.Content>
@@ -17,7 +23,12 @@ const Login = () => {
           <Title as="h2">Boas vindas de volta!</Title>
           <Text as="p">{appConfig.name}</Text>
 
-          <TextField type="text" placeholder="example@example.com" fullWidth />
+          <TextField
+            type="text"
+            placeholder="example@example.com"
+            fullWidth
+            handleDebounceOnChange={handleUsername}
+          />
 
           <Button as="button" label="Login" size="md" fullWidth rounded="sm" />
 

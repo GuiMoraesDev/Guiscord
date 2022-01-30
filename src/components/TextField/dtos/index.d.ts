@@ -1,13 +1,7 @@
 import { DefaultTheme } from 'styled-components';
 
-interface IErrorDTO {
-  message: string;
-  isValid?: boolean;
-}
+import { IErrorDTO } from 'hooks/useErrors';
 
-export interface IErrorsProps {
-  [key: string]: IErrorDTO;
-}
 export interface TextFieldDefaultPropsThatMakeStyles {
   fullWidth?: boolean;
   dimension?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';

@@ -9,10 +9,11 @@ import appConfig from 'configs/app-config';
 import Button from 'components/Button';
 import Text from 'components/Text';
 import { Input } from 'components/TextField';
-import { IErrorsProps } from 'components/TextField/dtos';
 import Title from 'components/Title';
 
 import { useAuth } from 'context/auth';
+
+import useErrors from 'hooks/useErrors';
 
 import * as Styles from 'styles/pages/index';
 
@@ -20,27 +21,26 @@ const Login = () => {
   const { user, signIn } = useAuth();
   const router = useRouter();
 
-  const inputRef = React.useRef<HTMLInputElement>(null);
-
-  const [errors, setError] = React.useState<IErrorsProps>({
+  const [errorsState, errorsDispatch] = useErrors({
     username: {
       message: 'Username is a required field',
-      isValid: true,
     },
   });
+
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleGoToChat = React.useCallback(() => {
     const usernameValue = inputRef.current?.value;
 
     if (!usernameValue) {
-      return setError((errorsState) => ({
-        ...errorsState,
-        username: { ...errorsState.username, isValid: false },
-      }));
+      return errorsDispatch({
+        state: 'invalid',
+        payload: 'username',
+      });
     }
 
     router.push('chat');
-  }, [router]);
+  }, [errorsDispatch, router]);
 
   const handleUsername = React.useCallback(
     (value) => {
@@ -50,12 +50,12 @@ const Login = () => {
 
       signIn({ username: value });
 
-      setError((errorsState) => ({
-        ...errorsState,
-        username: { ...errorsState.username, isValid: true },
-      }));
+      return errorsDispatch({
+        state: 'valid',
+        payload: 'username',
+      });
     },
-    [signIn]
+    [errorsDispatch, signIn]
   );
 
   return (
@@ -69,7 +69,7 @@ const Login = () => {
             placeholder="example@example.com"
             fullWidth
             handleDebounceOnChange={handleUsername}
-            error={errors.username}
+            error={errorsState.username}
             ref={inputRef}
           />
 

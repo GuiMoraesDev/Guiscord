@@ -58,7 +58,7 @@ const TextField: React.ForwardRefRenderFunction<
         error={error}
         ref={ref}
       />
-      {!error?.isValid && (
+      {error && !error?.isValid && (
         <Styles.ErrorMessage>{error?.message}</Styles.ErrorMessage>
       )}
     </Styles.TextFieldContainer>

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { TextFieldDefaultPropsThatMakeStyles } from '.';
+import { TextFieldDefaultPropsThatMakeStyles } from './dtos';
 
 export const TextFieldContainer = styled.div<TextFieldDefaultPropsThatMakeStyles>`
   display: block;
@@ -16,7 +16,7 @@ export const TextFieldContainer = styled.div<TextFieldDefaultPropsThatMakeStyles
 
 export const Label = styled.label``;
 
-export const TextField = styled.input<TextFieldDefaultPropsThatMakeStyles>`
+const TextFieldStyle = css<TextFieldDefaultPropsThatMakeStyles>`
   position: relative;
 
   display: flex;
@@ -86,38 +86,46 @@ export const TextField = styled.input<TextFieldDefaultPropsThatMakeStyles>`
       `;
   }}
 
-  ${({ size, theme }) => {
-    if (size === 'xs')
+  ${({ dimension, theme }) => {
+    if (dimension === 'xs')
       return css`
         ${theme.typography.variants.body4};
         padding: ${theme.spaces['x1.5']} ${theme.spaces['x2.5']};
       `;
 
-    if (size === 'sm')
+    if (dimension === 'sm')
       return css`
         ${theme.typography.variants.body3};
 
         padding: ${theme.spaces['x2']} ${theme.spaces['x3']};
       `;
 
-    if (size === 'md')
+    if (dimension === 'md')
       return css`
         ${theme.typography.variants.body3};
 
         padding: ${theme.spaces['x2']} ${theme.spaces['x4']};
       `;
-    if (size === 'lg')
+    if (dimension === 'lg')
       return css`
         ${theme.typography.variants.body2};
 
         padding: ${theme.spaces['x2']} ${theme.spaces['x4']};
       `;
 
-    if (size === 'xl')
+    if (dimension === 'xl')
       return css`
         ${theme.typography.variants.body1};
 
         padding: ${theme.spaces['x3']} ${theme.spaces['x6']};
       `;
   }}
+`;
+
+export const InputTextField = styled.input<TextFieldDefaultPropsThatMakeStyles>`
+  ${TextFieldStyle}
+`;
+
+export const TextAreaTextField = styled.textarea<TextFieldDefaultPropsThatMakeStyles>`
+  ${TextFieldStyle}
 `;

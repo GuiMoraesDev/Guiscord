@@ -1,8 +1,9 @@
 import { AppProps } from 'next/app';
 import NextHead from 'next/head';
 
-import appConfig from 'configs/app-config';
 import { ThemeProvider } from 'styled-components';
+
+import appConfig from 'configs/app-config';
 
 import GlobalAppProvider from 'context';
 

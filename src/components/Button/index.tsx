@@ -7,7 +7,7 @@ import * as Styles from './styles';
 
 export interface ButtonDefaultPropsThatMakeStyles {
   fullWidth?: boolean;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'square';
+  dimension?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'square';
   rounded?: keyof DefaultTheme['rounded'];
   variant?: 'primary' | 'outline' | 'neutral';
   isDisabled: boolean;

@@ -35,41 +35,41 @@ export const Button = styled.button<ButtonDefaultPropsThatMakeStyles>`
       `;
   }}
 
-  ${({ size, theme }) => {
-    if (size === 'xs')
+  ${({ dimension, theme }) => {
+    if (dimension === 'xs')
       return css`
         ${theme.typography.variants.body4};
         padding: ${theme.spaces['x1.5']} ${theme.spaces['x2.5']};
       `;
 
-    if (size === 'sm')
+    if (dimension === 'sm')
       return css`
         ${theme.typography.variants.body3};
 
         padding: ${theme.spaces['x2']} ${theme.spaces['x3']};
       `;
 
-    if (size === 'md')
+    if (dimension === 'md')
       return css`
         ${theme.typography.variants.body3};
 
         padding: ${theme.spaces['x2']} ${theme.spaces['x4']};
       `;
-    if (size === 'lg')
+    if (dimension === 'lg')
       return css`
         ${theme.typography.variants.body2};
 
         padding: ${theme.spaces['x2']} ${theme.spaces['x4']};
       `;
 
-    if (size === 'xl')
+    if (dimension === 'xl')
       return css`
         ${theme.typography.variants.body2};
 
         padding: ${theme.spaces['x3']} ${theme.spaces['x6']};
       `;
 
-    if (size === 'square')
+    if (dimension === 'square')
       return css`
         ${theme.typography.variants.body2};
 

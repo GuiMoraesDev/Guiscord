@@ -8,7 +8,7 @@ import appConfig from 'configs/app-config';
 
 import Button from 'components/Button';
 import Text from 'components/Text';
-import TextField from 'components/TextField';
+import { Input } from 'components/TextField';
 import Title from 'components/Title';
 
 import { useAuth } from 'context/auth';
@@ -18,6 +18,8 @@ import * as Styles from 'styles/pages/index';
 const Login = () => {
   const { user, signIn } = useAuth();
   const router = useRouter();
+
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleGoToChat = React.useCallback(() => {
     router.push('chat');
@@ -37,11 +39,11 @@ const Login = () => {
           <Title as="h2">Boas vindas de volta!</Title>
           <Text as="p">{appConfig.name}</Text>
 
-          <TextField
-            type="text"
+          <Input
             placeholder="example@example.com"
             fullWidth
             handleDebounceOnChange={handleUsername}
+            ref={inputRef}
           />
 
           <Button

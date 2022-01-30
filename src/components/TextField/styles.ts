@@ -48,6 +48,8 @@ const TextFieldStyle = css<TextFieldDefaultPropsThatMakeStyles>`
       `;
   }}
 
+  
+
   ${({ variant, theme }) => {
     if (variant === 'neutral')
       return css`
@@ -120,6 +122,13 @@ const TextFieldStyle = css<TextFieldDefaultPropsThatMakeStyles>`
         padding: ${theme.spaces['x3']} ${theme.spaces['x6']};
       `;
   }}
+
+  ${({ error, theme }) => {
+    if (!error?.isValid)
+      return css`
+        border: 1px solid ${theme.colors.alert.error};
+      `;
+  }};
 `;
 
 export const InputTextField = styled.input<TextFieldDefaultPropsThatMakeStyles>`
@@ -128,4 +137,12 @@ export const InputTextField = styled.input<TextFieldDefaultPropsThatMakeStyles>`
 
 export const TextAreaTextField = styled.textarea<TextFieldDefaultPropsThatMakeStyles>`
   ${TextFieldStyle}
+`;
+
+export const ErrorMessage = styled.p`
+  color: ${({ theme }) => theme.colors.alert.error};
+
+  text-align: start;
+
+  font-size: ${({ theme }) => theme.spaces.x3};
 `;

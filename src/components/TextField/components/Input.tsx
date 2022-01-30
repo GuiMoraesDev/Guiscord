@@ -21,6 +21,7 @@ const TextField: React.ForwardRefRenderFunction<
     rounded = 'sm',
     variant = 'neutral',
     placeholder = 'Type here...',
+    error = undefined,
     ...props
   },
   ref
@@ -54,8 +55,12 @@ const TextField: React.ForwardRefRenderFunction<
         rounded={rounded}
         variant={variant}
         placeholder={placeholder}
+        error={error}
         ref={ref}
       />
+      {!error?.isValid && (
+        <Styles.ErrorMessage>{error?.message}</Styles.ErrorMessage>
+      )}
     </Styles.TextFieldContainer>
   );
 };

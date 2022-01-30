@@ -14,6 +14,11 @@ const colors = {
     '000': '#FFFFFF',
     '050': '#F5F7FA',
   },
+  alert: {
+    success: '#03FCBA',
+    warning: '#FD7949',
+    error: '#FD4D0D',
+  },
   primary: {
     '100': '#C1EAC5',
     '200': '#A3D9A5',

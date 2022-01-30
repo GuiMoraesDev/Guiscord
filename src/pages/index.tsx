@@ -9,6 +9,7 @@ import appConfig from 'configs/app-config';
 import Button from 'components/Button';
 import Text from 'components/Text';
 import { Input } from 'components/TextField';
+import { IErrorsProps } from 'components/TextField/dtos';
 import Title from 'components/Title';
 
 import { useAuth } from 'context/auth';
@@ -21,13 +22,40 @@ const Login = () => {
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
+  const [errors, setError] = React.useState<IErrorsProps>({
+    username: {
+      message: 'Username is a required field',
+      isValid: true,
+    },
+  });
+
   const handleGoToChat = React.useCallback(() => {
+    const usernameValue = inputRef.current?.value;
+
+    if (!usernameValue) {
+      return setError((errorsState) => ({
+        ...errorsState,
+        username: { ...errorsState.username, isValid: false },
+      }));
+    }
+
     router.push('chat');
   }, [router]);
 
   const handleUsername = React.useCallback(
     (value) => {
+      console.log('value', value);
+
+      if (!value) {
+        return;
+      }
+
       signIn({ username: value });
+
+      setError((errorsState) => ({
+        ...errorsState,
+        username: { ...errorsState.username, isValid: true },
+      }));
     },
     [signIn]
   );
@@ -43,6 +71,7 @@ const Login = () => {
             placeholder="example@example.com"
             fullWidth
             handleDebounceOnChange={handleUsername}
+            error={errors.username}
             ref={inputRef}
           />
 

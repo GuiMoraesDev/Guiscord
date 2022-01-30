@@ -136,6 +136,11 @@ declare module 'styled-components' {
     };
     colors: {
       transparent: string;
+      alert: {
+        success: string;
+        warning: string;
+        error: string;
+      };
       neutrals: {
         '100': string;
         '200': string;

@@ -2,6 +2,8 @@ import React from 'react';
 
 import axios from 'axios';
 
+import useCookies from 'hooks/useCookies';
+
 import { getUser, ISignInDTO, UserDTO } from 'services/github/api.users';
 
 interface IAuthContextData {
@@ -15,7 +17,21 @@ const AuthContext = React.createContext<IAuthContextData>(
 );
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [data, setData] = React.useState<UserDTO | null>(null);
+  const cookies = useCookies();
+
+  const [data, setData] = React.useState<UserDTO | null>(() => {
+    const user = cookies?.getItem('User');
+
+    if (user) {
+      const parsedUser: UserDTO = JSON.parse(user);
+
+      return {
+        ...parsedUser,
+      };
+    }
+
+    return null;
+  });
 
   const setUser = React.useCallback(
     async ({ username }): Promise<() => void> => {
@@ -23,16 +39,20 @@ const AuthProvider: React.FC = ({ children }) => {
 
       const response = await getUser({ username }, getUserCancelToken.token);
 
+      cookies?.setItem('User', JSON.stringify(response.data));
+
       setData(response.data);
 
       return () => getUserCancelToken.cancel('axios request cancelled');
     },
-    []
+    [cookies]
   );
 
   const clearUser = React.useCallback(() => {
     setData(null);
-  }, []);
+
+    cookies?.removeItem('User');
+  }, [cookies]);
 
   return (
     <AuthContext.Provider

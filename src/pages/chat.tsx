@@ -35,6 +35,9 @@ const Chat = () => {
 
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
+  const [selectedContact, setSelectedContact] = React.useState<string | null>(
+    null
+  );
   const [listMessages, setListMessages] = React.useState<IMessageProps[]>([]);
   const [listFollowers, setListFollowers] = React.useState<FollowersDTO[]>([]);
 
@@ -47,13 +50,16 @@ const Chat = () => {
   }, [clearUser, router, user?.login]);
   React.useEffect(() => {
     const loadMessages = async () => {
-      const response = await getMessages();
+      const response = await getMessages(
+        user?.login || '',
+        selectedContact || ''
+      );
 
       setListMessages(response);
     };
 
     loadMessages();
-  }, []);
+  }, [selectedContact, user?.login]);
   React.useEffect(() => {
     const getUserFollowersCancelToken = axios.CancelToken.source();
 
@@ -96,11 +102,12 @@ const Chat = () => {
     setListMessages((state) => state.filter((msg) => msg.id !== id));
   }, []);
   const handleSubmit = React.useCallback(async () => {
-    if (inputRef.current?.value) {
+    if (inputRef.current?.value && selectedContact) {
       const message = inputRef.current?.value;
 
       const response = await postMessage({
         de: user?.login || 'Not Identified',
+        para: selectedContact,
         texto: message,
       });
 
@@ -118,14 +125,18 @@ const Chat = () => {
       state: 'invalid',
       payload: 'userMessage',
     });
-  }, [errorsDispatch, user?.login]);
+  }, [errorsDispatch, selectedContact, user?.login]);
 
   return (
     <Styles.Container>
       <Styles.Content>
         <Styles.Sidebar>
           {listFollowers.map((follower) => (
-            <Styles.FollowerCard key={follower.login}>
+            <Styles.FollowerCard
+              key={follower.login}
+              selected={selectedContact === follower.login}
+              onClick={() => setSelectedContact(follower.login)}
+            >
               <img
                 src={`https://github.com/${follower.login}.png`}
                 alt={follower.login}

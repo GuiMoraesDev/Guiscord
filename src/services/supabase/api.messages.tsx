@@ -4,6 +4,7 @@ interface ISupabaseMessageProps {
   id: string;
   de: string;
   texto: string;
+  para: string;
   created_at: Date;
 }
 
@@ -12,19 +13,27 @@ type IPostMessageParams = Omit<ISupabaseMessageProps, 'id' | 'created_at'>;
 export interface IMessageProps {
   id: string;
   from: string;
+  to: string;
   text: string;
   created_at: Date;
 }
 
-const getMessages = async (): Promise<IMessageProps[]> => {
+const getMessages = async (
+  username: string,
+  contact: string
+): Promise<IMessageProps[]> => {
   const response = await supabaseClient
     .from<ISupabaseMessageProps>('mensagens')
-    .select('*');
+    .select('*')
+    .or(
+      `and(de.eq.${username}, para.eq.${contact}), and(de.eq.${contact}, para.eq.${username})`
+    );
 
   const parseResponse =
     response.data?.map((msg) => ({
       id: msg.id,
       from: msg.de,
+      to: msg.para,
       text: msg.texto,
       created_at: msg.created_at,
     })) || [];
@@ -43,6 +52,7 @@ const postMessage = async (
     response.data?.map((msg) => ({
       id: msg.id,
       from: msg.de,
+      to: msg.para,
       text: msg.texto,
       created_at: msg.created_at,
     })) || [];
@@ -59,6 +69,7 @@ const deleteMessage = async (id: string): Promise<IMessageProps[]> => {
   const parseResponse =
     response.data?.map((msg) => ({
       id: msg.id,
+      to: msg.para,
       from: msg.de,
       text: msg.texto,
       created_at: msg.created_at,

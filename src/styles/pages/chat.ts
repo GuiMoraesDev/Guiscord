@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -145,7 +145,11 @@ export const Sidebar = styled.aside`
   padding: 0 ${({ theme }) => theme.spaces.x4};
 `;
 
-export const FollowerCard = styled.div`
+interface IFollowerCardProps {
+  selected: boolean;
+}
+
+export const FollowerCard = styled.div<IFollowerCardProps>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -162,9 +166,17 @@ export const FollowerCard = styled.div`
 
   overflow: hidden;
 
+  transition: border ${({ theme }) => theme.transition.slow};
+
   :not(:first-of-type, :last-of-type) {
     margin: ${({ theme }) => theme.spaces.x2} 0;
   }
+
+  ${({ selected, theme }) =>
+    selected &&
+    css`
+      border: 1px solid ${theme.colors.alert.success};
+    `}
 
   > img {
     width: 24px;

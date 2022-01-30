@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import React from 'react';
 
 import axios from 'axios';
@@ -15,6 +17,7 @@ const AuthContext = React.createContext<IAuthContextData>(
 );
 
 const AuthProvider: React.FC = ({ children }) => {
+  const router = useRouter();
   const [data, setData] = React.useState<UserDTO | null>(null);
 
   const signIn = React.useCallback(
@@ -30,7 +33,10 @@ const AuthProvider: React.FC = ({ children }) => {
     []
   );
 
-  const signOut = React.useCallback(() => setData(null), []);
+  const signOut = React.useCallback(() => {
+    setData(null);
+    router.push('/');
+  }, [router]);
 
   return (
     <AuthContext.Provider

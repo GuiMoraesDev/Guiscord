@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import React from 'react';
 
 import AvatarPlaceholder from 'assets/images/avatar-placeholder.svg';
@@ -11,14 +13,18 @@ import Title from 'components/Title';
 
 import { useAuth } from 'context/auth';
 
-import * as Styles from 'styles/pages/login';
+import * as Styles from 'styles/pages/index';
 
 const Login = () => {
   const { user, signIn } = useAuth();
+  const router = useRouter();
+
+  const handleGoToChat = React.useCallback(() => {
+    router.push('chat');
+  }, [router]);
 
   const handleUsername = React.useCallback(
     (value) => {
-      console.log(value);
       signIn({ username: value });
     },
     [signIn]
@@ -38,7 +44,14 @@ const Login = () => {
             handleDebounceOnChange={handleUsername}
           />
 
-          <Button as="button" label="Login" size="md" fullWidth rounded="sm" />
+          <Button
+            as="button"
+            label="Login"
+            size="md"
+            fullWidth
+            rounded="sm"
+            onClick={handleGoToChat}
+          />
 
           <Styles.SocialMediaWrapper>
             <Button

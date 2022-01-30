@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import * as Icons from 'react-icons/fa';
 
 import { DefaultTheme } from 'styled-components';
@@ -20,6 +20,7 @@ interface ButtonDefaultProps
   label?: string;
   disabled?: boolean;
   href?: string;
+  onClick?(): void;
 }
 
 type ButtonProps = ButtonDefaultProps;
@@ -32,11 +33,20 @@ const Button = ({
 }: PropsWithChildren<ButtonProps>): JSX.Element => {
   const IconComponent = Icons[icon!];
 
+  const handleClick = React.useCallback(
+    (event) => {
+      event.preventDefault();
+
+      props.onClick?.();
+    },
+    [props]
+  );
+
   return (
     <Styles.Button
       as={HtmlTag}
       {...props}
-      target={HtmlTag === 'a' ? '_blank' : undefined}
+      onClick={handleClick}
       isDisabled={Boolean(props.disabled)}
     >
       {icon && <IconComponent />}

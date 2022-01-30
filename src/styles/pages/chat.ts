@@ -86,6 +86,8 @@ export const ChatMessage = styled.div`
   border-radius: ${({ theme }) => theme.rounded.sm};
 
   > header {
+    position: relative;
+
     display: flex;
     align-items: center;
 
@@ -102,6 +104,13 @@ export const ChatMessage = styled.div`
       font-weight: 600;
 
       margin-left: ${({ theme }) => theme.spaces.x2};
+    }
+
+    > .removeMessage {
+      position: absolute;
+
+      top: 0;
+      right: 0;
     }
   }
 

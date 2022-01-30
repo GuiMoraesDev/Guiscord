@@ -12,6 +12,7 @@ import { useAuth } from 'context/auth';
 import useErrors from 'hooks/useErrors';
 
 import {
+  deleteMessage,
   getMessages,
   IMessageProps,
   postMessage,
@@ -61,6 +62,11 @@ const Chat = () => {
       payload: 'userMessage',
     });
   }, [errorsDispatch]);
+  const handleDeleteMessage = React.useCallback(async (id: string) => {
+    await deleteMessage(id);
+
+    setListMessages((state) => state.filter((msg) => msg.id !== id));
+  }, []);
   const handleSubmit = React.useCallback(async () => {
     if (inputRef.current?.value) {
       const message = inputRef.current?.value;
@@ -73,6 +79,11 @@ const Chat = () => {
       setListMessages((state) => [...state, ...response]);
 
       inputRef.current.value = '';
+
+      return errorsDispatch({
+        state: 'valid',
+        payload: 'userMessage',
+      });
     }
 
     return errorsDispatch({
@@ -109,6 +120,14 @@ const Chat = () => {
                   alt={message.from}
                 />
                 <strong>{message.from}</strong>
+
+                <Button
+                  className="removeMessage"
+                  icon="FaTimes"
+                  variant="neutral"
+                  dimension="square"
+                  onClick={() => handleDeleteMessage(message.id)}
+                />
               </header>
               <p>{message.text}</p>
             </Styles.ChatMessage>

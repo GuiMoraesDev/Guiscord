@@ -50,4 +50,21 @@ const postMessage = async (
   return parseResponse;
 };
 
-export { getMessages, postMessage };
+const deleteMessage = async (id: string): Promise<IMessageProps[]> => {
+  const response = await supabaseClient
+    .from<ISupabaseMessageProps>('mensagens')
+    .delete()
+    .match({ id });
+
+  const parseResponse =
+    response.data?.map((msg) => ({
+      id: msg.id,
+      from: msg.de,
+      text: msg.texto,
+      created_at: msg.created_at,
+    })) || [];
+
+  return parseResponse;
+};
+
+export { getMessages, postMessage, deleteMessage };

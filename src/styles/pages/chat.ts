@@ -145,11 +145,11 @@ export const Sidebar = styled.aside`
   padding: 0 ${({ theme }) => theme.spaces.x4};
 `;
 
-interface IFollowerCardProps {
+interface IFollowingCardProps {
   selected: boolean;
 }
 
-export const FollowerCard = styled.div<IFollowerCardProps>`
+export const FollowingCard = styled.div<IFollowingCardProps>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -192,6 +192,32 @@ export const FollowerCard = styled.div<IFollowerCardProps>`
     margin-left: ${({ theme }) => theme.spaces.x2};
 
     word-break: break-all;
+  }
+`;
+
+export const EmptyFollowing = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  grid-gap: ${({ theme }) => theme.spaces.x4};
+
+  width: 100%;
+  height: 100%;
+
+  color: ${({ theme }) => theme.colors.neutrals[100]};
+
+  > img {
+    width: 24px;
+    height: 24px;
+
+    border-radius: 50%;
+  }
+
+  > strong {
+    font-size: ${({ theme }) => theme.spaces.x4};
+    font-weight: 600;
   }
 `;
 

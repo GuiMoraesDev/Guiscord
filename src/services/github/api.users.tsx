@@ -9,7 +9,7 @@ export interface UserDTO {
   gravatar_id?: string;
   url: string;
   html_url: string;
-  followers_url?: string;
+  Following_url?: string;
   following_url?: string;
   gists_url?: string;
   starred_url?: string;
@@ -30,13 +30,13 @@ export interface UserDTO {
   twitter_username?: string;
   public_repos?: number;
   public_gists?: number;
-  followers?: number;
+  Following?: number;
   following?: number;
   created_at: string;
   updated_at: string;
 }
 
-export interface FollowersDTO {
+export interface FollowingDTO {
   login: string;
   id: number;
   node_id?: string;
@@ -44,7 +44,7 @@ export interface FollowersDTO {
   gravatar_id?: string;
   url: string;
   html_url?: string;
-  followers_url?: string;
+  Following_url?: string;
   following_url?: string;
   gists_url?: string;
   starred_url?: string;
@@ -70,15 +70,15 @@ const getUser = async (
   return response;
 };
 
-const getUserFollowers = async (
+const getUserFollowing = async (
   { username }: ISignInDTO,
   cancelToken: CancelToken
-): Promise<AxiosResponse<FollowersDTO[]>> => {
-  const response = await api.get(`/users/${username}/followers`, {
+): Promise<AxiosResponse<FollowingDTO[]>> => {
+  const response = await api.get(`/users/${username}/following`, {
     cancelToken,
   });
 
   return response;
 };
 
-export { getUser, getUserFollowers };
+export { getUser, getUserFollowing };

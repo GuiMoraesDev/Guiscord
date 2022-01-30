@@ -15,7 +15,7 @@ import { useAuth } from 'context/auth';
 import useErrors from 'hooks/useErrors';
 import useLoading from 'hooks/useLoading';
 
-import { FollowersDTO, getUserFollowers } from 'services/github/api.users';
+import { getUserFollowing, FollowingDTO } from 'services/github/api.users';
 import {
   deleteMessage,
   getMessages,
@@ -30,7 +30,7 @@ const Chat = () => {
   const router = useRouter();
 
   const [loadingMessagesState, loadingMessagesDispatch] = useLoading();
-  const [loadingFollowersState, loadingFollowersDispatch] = useLoading();
+  const [loadingFollowingState, loadingFollowingDispatch] = useLoading();
   const [errorsState, errorsDispatch] = useErrors({
     userMessage: {
       message: 'Message is a required field',
@@ -43,7 +43,7 @@ const Chat = () => {
     null
   );
   const [listMessages, setListMessages] = React.useState<IMessageProps[]>([]);
-  const [listFollowers, setListFollowers] = React.useState<FollowersDTO[]>([]);
+  const [listFollowing, setListFollowing] = React.useState<FollowingDTO[]>([]);
 
   React.useEffect(() => {
     if (!user?.login) {
@@ -73,37 +73,37 @@ const Chat = () => {
     loadMessages();
   }, [loadingMessagesDispatch, selectedContact, user?.login]);
   React.useEffect(() => {
-    const getUserFollowersCancelToken = axios.CancelToken.source();
+    const getUserFollowingCancelToken = axios.CancelToken.source();
 
-    const loadFollowers = async (
-      getUserFollowersCancelToken: CancelTokenSource
+    const loadFollowing = async (
+      getUserFollowingCancelToken: CancelTokenSource
     ) => {
       if (!user?.login) return;
 
-      loadingFollowersDispatch({
+      loadingFollowingDispatch({
         state: 'loading',
       });
 
-      const response = await getUserFollowers(
+      const response = await getUserFollowing(
         {
           username: user?.login,
         },
-        getUserFollowersCancelToken.token
+        getUserFollowingCancelToken.token
       );
 
-      setListFollowers(response.data);
+      setListFollowing(response.data);
 
-      loadingFollowersDispatch({
+      loadingFollowingDispatch({
         state: 'initial',
       });
     };
 
-    loadFollowers(getUserFollowersCancelToken);
+    loadFollowing(getUserFollowingCancelToken);
 
     return () => {
-      getUserFollowersCancelToken.cancel();
+      getUserFollowingCancelToken.cancel();
     };
-  }, [loadingFollowersDispatch, user?.login]);
+  }, [loadingFollowingDispatch, user?.login]);
 
   const handleLogout = React.useCallback(() => {
     clearUser();
@@ -151,22 +151,27 @@ const Chat = () => {
     <Styles.Container>
       <Styles.Content>
         <Styles.Sidebar>
-          {loadingFollowersState.loading ? (
-            <Loading status={loadingFollowersState} />
-          ) : (
-            listFollowers.map((follower) => (
-              <Styles.FollowerCard
-                key={follower.login}
-                selected={selectedContact === follower.login}
-                onClick={() => setSelectedContact(follower.login)}
+          {loadingFollowingState.loading ? (
+            <Loading status={loadingFollowingState} />
+          ) : listFollowing.length ? (
+            listFollowing.map((following) => (
+              <Styles.FollowingCard
+                key={following.login}
+                selected={selectedContact === following.login}
+                onClick={() => setSelectedContact(following.login)}
               >
                 <img
-                  src={`https://github.com/${follower.login}.png`}
-                  alt={follower.login}
+                  src={`https://github.com/${following.login}.png`}
+                  alt={following.login}
                 />
-                <strong>{follower.login}</strong>
-              </Styles.FollowerCard>
+                <strong>@{following.login}</strong>
+              </Styles.FollowingCard>
             ))
+          ) : (
+            <Styles.EmptyFollowing>
+              <strong>You don&apos;t follow nobody yet</strong>
+              <p>Follow some users in GitHub to see them here</p>
+            </Styles.EmptyFollowing>
           )}
         </Styles.Sidebar>
         <Styles.Header>

@@ -35,6 +35,14 @@ const Chat = () => {
 
   const [listMessages, setListMessages] = React.useState<IMessageProps[]>([]);
 
+  React.useEffect(() => {
+    if (!user?.login) {
+      clearUser();
+
+      router.push('/');
+    }
+  }, [clearUser, router, user?.login]);
+
   const generateMessageMetadata = React.useCallback(
     (from: string, message: string): IMessageProps => {
       return {

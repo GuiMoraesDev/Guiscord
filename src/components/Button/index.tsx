@@ -57,7 +57,7 @@ const Button = ({
 
 Button.defaultProps = {
   fullWidth: false,
-  size: 'sm',
+  dimension: 'sm',
   rounded: 'sm',
   variant: 'primary',
 };

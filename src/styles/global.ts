@@ -2,12 +2,23 @@ import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
   ::-webkit-scrollbar {
-    width: 0.312vw;
+    width: ${({ theme }) => theme.spaces.x1};
+
+    
   }
 
-  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-track, ::-webkit-scrollbar-thumb {
+    border-radius: ${({ theme }) => theme.spaces.x48};
+  };
+
+  ::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.colors.neutrals[500]};
+    
+    border: 1px solid ${({ theme }) => theme.colors.neutrals[400]};
+  }
+
   ::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.neutrals[200]};
+    background-color: ${({ theme }) => theme.colors.neutrals[400]};
   }
 
   ::-webkit-search-cancel-button {

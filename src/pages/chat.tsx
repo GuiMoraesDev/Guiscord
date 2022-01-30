@@ -3,6 +3,7 @@ import React from 'react';
 import { uniqueId } from 'lodash';
 
 import Button from 'components/Button';
+import Text from 'components/Text';
 import { TextArea } from 'components/TextField';
 import { IErrorsProps } from 'components/TextField/dtos';
 import Title from 'components/Title';
@@ -67,14 +68,17 @@ const Chat = () => {
     <Styles.Container>
       <Styles.Content>
         <Styles.Header>
-          <Title as="h2">Chat</Title>
+          <div>
+            <Title as="h1">Chat</Title>
+            <Text>Welcome, {user?.name}</Text>
+          </div>
 
           <Button
             as="button"
             label="Logout"
             dimension="md"
             rounded="sm"
-            variant="neutral"
+            variant="outline"
             onClick={handleLogout}
           />
         </Styles.Header>

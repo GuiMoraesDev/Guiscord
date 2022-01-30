@@ -44,9 +44,8 @@ export const Header = styled.header`
   justify-content: space-between;
 
   width: 100%;
+  height: ${({ theme }) => theme.spaces.x16};
 `;
-
-export const FormWrapper = styled.form``;
 
 export const ChatWrapper = styled.div`
   position: relative;

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { HTMLAttributes } from 'react';
 import * as Icons from 'react-icons/fa';
 
 import { DefaultTheme } from 'styled-components';
@@ -23,14 +23,14 @@ interface ButtonDefaultProps
   onClick?(): void;
 }
 
-type ButtonProps = ButtonDefaultProps;
+type ButtonProps = ButtonDefaultProps & HTMLAttributes<HTMLButtonElement>;
 
 const Button = ({
   as: HtmlTag,
   label,
   icon,
   ...props
-}: PropsWithChildren<ButtonProps>): JSX.Element => {
+}: ButtonProps): JSX.Element => {
   const IconComponent = Icons[icon!];
 
   const handleClick = React.useCallback(

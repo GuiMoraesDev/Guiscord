@@ -14,10 +14,15 @@ const TextField: React.ForwardRefRenderFunction<
 > = (
   {
     label,
-    disabled,
     handleOnChange,
     handleDebounceOnChange,
-    fullWidth,
+    fullWidth = false,
+    disabled = false,
+    dimension = 'sm',
+    rounded = 'sm',
+    variant = 'neutral',
+    placeholder = 'Type here...',
+    error = undefined,
     ...props
   },
   ref
@@ -40,15 +45,23 @@ const TextField: React.ForwardRefRenderFunction<
     <Styles.TextFieldContainer isDisabled={isDisabled} fullWidth={fullWidth}>
       {label && <Styles.Label>{label}</Styles.Label>}
       <Styles.TextAreaTextField
+        {...props}
         isDisabled={isDisabled}
         fullWidth={fullWidth}
-        {...props}
         onChange={(event) => {
           props.onChange?.(event);
           handleChangeValue(event.target.value);
         }}
+        dimension={dimension}
+        rounded={rounded}
+        variant={variant}
+        placeholder={placeholder}
+        error={error}
         ref={ref}
       />
+      {!error?.isValid && (
+        <Styles.ErrorMessage>{error?.message}</Styles.ErrorMessage>
+      )}
     </Styles.TextFieldContainer>
   );
 };

@@ -44,8 +44,6 @@ const Login = () => {
 
   const handleUsername = React.useCallback(
     (value) => {
-      console.log('value', value);
-
       if (!value) {
         return;
       }

@@ -7,14 +7,20 @@ import Text from 'components/Text';
 import TextField from 'components/TextField';
 import Title from 'components/Title';
 
-import * as Styles from './styles';
+import { useAuth } from 'context/auth';
+
+import * as Styles from 'styles/pages/login';
 
 const Login = () => {
-  const username = 'peas';
+  const { user, signIn } = useAuth();
 
-  const handleUsername = React.useCallback((value) => {
-    console.log(value);
-  }, []);
+  const handleUsername = React.useCallback(
+    (value) => {
+      console.log(value);
+      signIn({ username: value });
+    },
+    [signIn]
+  );
 
   return (
     <Styles.Container>
@@ -62,12 +68,9 @@ const Login = () => {
 
         <Styles.UserCard>
           <Styles.ImageWrapper>
-            <img
-              src={`https://github.com/${username}.png`}
-              alt={`avatar from ${username}`}
-            />
+            <img src={user?.avatar_url} alt={`avatar from ${user?.name}`} />
           </Styles.ImageWrapper>
-          <Text variant="highlighted">{username}</Text>
+          <Text variant="highlighted">{user?.name}</Text>
         </Styles.UserCard>
       </Styles.Content>
     </Styles.Container>

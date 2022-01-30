@@ -16,7 +16,17 @@ export const Container = styled.div`
 export const Content = styled.div`
   position: relative;
 
-  display: flex;
+  display: grid;
+
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: ${({ theme }) => theme.spaces.x16} 1fr ${({ theme }) =>
+      theme.spaces.x16};
+  grid-template-areas:
+    'Sidebar Header'
+    'Sidebar Chat'
+    'Sidebar UserInput';
+
+  grid-gap: ${({ theme }) => theme.spaces.x4};
 
   align-items: center;
   justify-content: space-between;
@@ -30,7 +40,7 @@ export const Content = styled.div`
 
   border-radius: 5px;
 
-  padding: ${({ theme }) => theme.spaces.x8};
+  padding: ${({ theme }) => theme.spaces.x4};
   margin: ${({ theme }) => theme.spaces.x4};
 
   box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
@@ -39,6 +49,8 @@ export const Content = styled.div`
 `;
 
 export const Header = styled.header`
+  grid-area: Header;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,6 +60,8 @@ export const Header = styled.header`
 `;
 
 export const ChatWrapper = styled.div`
+  grid-area: Chat;
+
   position: relative;
 
   display: flex;
@@ -58,7 +72,7 @@ export const ChatWrapper = styled.div`
   flex: 1;
 
   width: 100%;
-  height: 80%;
+  height: 100%;
 
   border-radius: 5px;
 
@@ -119,7 +133,59 @@ export const ChatMessage = styled.div`
   }
 `;
 
+export const Sidebar = styled.aside`
+  grid-area: Sidebar;
+
+  width: 100%;
+  height: 100%;
+
+  overflow-y: auto;
+
+  margin-right: ${({ theme }) => theme.spaces.x4};
+  padding: 0 ${({ theme }) => theme.spaces.x4};
+`;
+
+export const FollowerCard = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100%;
+  height: ${({ theme }) => theme.spaces.x16};
+
+  color: ${({ theme }) => theme.colors.neutrals[100]};
+  background-color: ${({ theme }) => theme.colors.neutrals[600]};
+
+  padding: ${({ theme }) => theme.spaces.x2};
+
+  border-radius: ${({ theme }) => theme.rounded.sm};
+
+  overflow: hidden;
+
+  :not(:first-of-type, :last-of-type) {
+    margin: ${({ theme }) => theme.spaces.x2} 0;
+  }
+
+  > img {
+    width: 24px;
+    height: 24px;
+
+    border-radius: 50%;
+  }
+
+  > strong {
+    font-size: ${({ theme }) => theme.spaces.x4};
+    font-weight: 600;
+
+    margin-left: ${({ theme }) => theme.spaces.x2};
+
+    word-break: break-all;
+  }
+`;
+
 export const UserInputWrapper = styled.div`
+  grid-area: UserInput;
+
   display: flex;
   align-items: center;
   justify-content: space-between;

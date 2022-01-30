@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 
 import React from 'react';
 
+import axios, { CancelTokenSource } from 'axios';
+
 import Button from 'components/Button';
 import Text from 'components/Text';
 import { TextArea } from 'components/TextField';
@@ -11,6 +13,7 @@ import { useAuth } from 'context/auth';
 
 import useErrors from 'hooks/useErrors';
 
+import { FollowersDTO, getUserFollowers } from 'services/github/api.users';
 import {
   deleteMessage,
   getMessages,
@@ -33,6 +36,7 @@ const Chat = () => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
   const [listMessages, setListMessages] = React.useState<IMessageProps[]>([]);
+  const [listFollowers, setListFollowers] = React.useState<FollowersDTO[]>([]);
 
   React.useEffect(() => {
     if (!user?.login) {
@@ -50,6 +54,30 @@ const Chat = () => {
 
     loadMessages();
   }, []);
+  React.useEffect(() => {
+    const getUserFollowersCancelToken = axios.CancelToken.source();
+
+    const loadFollowers = async (
+      getUserFollowersCancelToken: CancelTokenSource
+    ) => {
+      if (!user?.login) return;
+
+      const response = await getUserFollowers(
+        {
+          username: user?.login,
+        },
+        getUserFollowersCancelToken.token
+      );
+
+      setListFollowers(response.data);
+    };
+
+    loadFollowers(getUserFollowersCancelToken);
+
+    return () => {
+      getUserFollowersCancelToken.cancel();
+    };
+  }, [user?.login]);
 
   const handleLogout = React.useCallback(() => {
     clearUser();
@@ -95,6 +123,17 @@ const Chat = () => {
   return (
     <Styles.Container>
       <Styles.Content>
+        <Styles.Sidebar>
+          {listFollowers.map((follower) => (
+            <Styles.FollowerCard key={follower.login}>
+              <img
+                src={`https://github.com/${follower.login}.png`}
+                alt={follower.login}
+              />
+              <strong>{follower.login}</strong>
+            </Styles.FollowerCard>
+          ))}
+        </Styles.Sidebar>
         <Styles.Header>
           <div>
             <Title as="h1">Chat</Title>

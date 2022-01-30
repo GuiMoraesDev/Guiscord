@@ -2,8 +2,6 @@ import { useRouter } from 'next/router';
 
 import React from 'react';
 
-import { uniqueId } from 'lodash';
-
 import Button from 'components/Button';
 import Text from 'components/Text';
 import { TextArea } from 'components/TextField';
@@ -13,13 +11,13 @@ import { useAuth } from 'context/auth';
 
 import useErrors from 'hooks/useErrors';
 
-import * as Styles from 'styles/pages/chat';
+import {
+  getMessages,
+  IMessageProps,
+  postMessage,
+} from 'services/supabase/api.messages';
 
-interface IMessageProps {
-  id: string;
-  from: string;
-  text: string;
-}
+import * as Styles from 'styles/pages/chat';
 
 const Chat = () => {
   const { user, clearUser } = useAuth();
@@ -42,17 +40,16 @@ const Chat = () => {
       router.push('/');
     }
   }, [clearUser, router, user?.login]);
+  React.useEffect(() => {
+    const loadMessages = async () => {
+      const response = await getMessages();
 
-  const generateMessageMetadata = React.useCallback(
-    (from: string, message: string): IMessageProps => {
-      return {
-        id: uniqueId(),
-        from,
-        text: message,
-      };
-    },
-    []
-  );
+      setListMessages(response);
+    };
+
+    loadMessages();
+  }, []);
+
   const handleLogout = React.useCallback(() => {
     clearUser();
 
@@ -64,16 +61,16 @@ const Chat = () => {
       payload: 'userMessage',
     });
   }, [errorsDispatch]);
-  const handleSubmit = React.useCallback(() => {
+  const handleSubmit = React.useCallback(async () => {
     if (inputRef.current?.value) {
       const message = inputRef.current?.value;
 
-      const messageData = generateMessageMetadata(
-        user?.name || 'Not Identified',
-        message
-      );
+      const response = await postMessage({
+        de: user?.login || 'Not Identified',
+        texto: message,
+      });
 
-      setListMessages((state) => [...state, messageData]);
+      setListMessages((state) => [...state, ...response]);
 
       inputRef.current.value = '';
     }
@@ -82,7 +79,7 @@ const Chat = () => {
       state: 'invalid',
       payload: 'userMessage',
     });
-  }, [errorsDispatch, generateMessageMetadata, user?.name]);
+  }, [errorsDispatch, user?.login]);
 
   return (
     <Styles.Container>
@@ -107,7 +104,10 @@ const Chat = () => {
           {listMessages.map((message) => (
             <Styles.ChatMessage key={message.id}>
               <header>
-                <img src={user?.avatar_url} alt={user?.name} />
+                <img
+                  src={`https://github.com/${message.from}.png`}
+                  alt={message.from}
+                />
                 <strong>{message.from}</strong>
               </header>
               <p>{message.text}</p>

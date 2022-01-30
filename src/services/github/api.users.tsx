@@ -1,15 +1,6 @@
 import { AxiosResponse, CancelToken } from 'axios';
 
 import api from './api';
-
-export const AllRoleTitles = [
-  'Administrator',
-  'Supply Manager',
-  'Marketing Manager',
-] as const;
-type RolesTuple = typeof AllRoleTitles;
-export type IRoleTitles = RolesTuple[number];
-
 export interface UserDTO {
   login: string;
   id: number;

@@ -41,7 +41,7 @@ const TextField = ({
   const debounced = React.useRef(
     lodash.debounce((newValue) => {
       handleDebounceOnChange?.(newValue);
-    }, 200)
+    }, 500)
   );
 
   const handleChangeValue = (newValue: string) => {

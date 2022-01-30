@@ -1,9 +1,7 @@
-module.exports = {
-  reactStrictMode: true,
+const withImages = require('next-images');
 
-  images: {
-    domains: ['github.com'],
-  },
+module.exports = withImages({
+  reactStrictMode: true,
 
   async redirects() {
     return [
@@ -14,4 +12,8 @@ module.exports = {
       },
     ];
   },
-};
+
+  webpack(config, options) {
+    return config;
+  },
+});

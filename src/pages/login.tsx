@@ -1,5 +1,7 @@
 import React from 'react';
 
+import AvatarPlaceholder from 'assets/images/avatar-placeholder.svg';
+
 import appConfig from 'configs/app-config';
 
 import Button from 'components/Button';
@@ -68,9 +70,13 @@ const Login = () => {
 
         <Styles.UserCard>
           <Styles.ImageWrapper>
-            <img src={user?.avatar_url} alt={`avatar from ${user?.name}`} />
+            {user?.avatar_url ? (
+              <img src={user?.avatar_url} alt={`avatar from ${user?.name}`} />
+            ) : (
+              <img src={AvatarPlaceholder} alt="avatar placeholder" />
+            )}
           </Styles.ImageWrapper>
-          <Text variant="highlighted">{user?.name}</Text>
+          {user?.name && <Text variant="highlighted">{user.name}</Text>}
         </Styles.UserCard>
       </Styles.Content>
     </Styles.Container>

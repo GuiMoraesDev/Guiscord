@@ -89,7 +89,6 @@ export const ChatMessage = styled.div`
   justify-content: space-between;
 
   width: 100%;
-  height: ${({ theme }) => theme.spaces.x16};
 
   color: ${({ theme }) => theme.colors.neutrals[100]};
   background-color: ${({ theme }) => theme.colors.neutrals[700]};
@@ -105,10 +104,10 @@ export const ChatMessage = styled.div`
     display: flex;
     align-items: center;
 
-    height: 50%;
+    height: ${({ theme }) => theme.spaces.x16};
 
     > img {
-      height: 100%;
+      height: 60%;
 
       border-radius: 50%;
     }
@@ -130,6 +129,13 @@ export const ChatMessage = styled.div`
 
   > p {
     font-size: ${({ theme }) => theme.spaces.x3};
+
+    > img {
+      width: ${({ theme }) => theme.spaces.x16};
+      height: ${({ theme }) => theme.spaces.x16};
+
+      margin-left: ${({ theme }) => theme.spaces.x4};
+    }
   }
 `;
 

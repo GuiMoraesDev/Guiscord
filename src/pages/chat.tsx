@@ -10,6 +10,7 @@ import selectMessageAnimationData from 'assets/animations/select-message.json';
 import Button from 'components/Button';
 import { Loading } from 'components/Loading';
 import LootieImg from 'components/Lottie';
+import StickersButton from 'components/StickersButton';
 import Text from 'components/Text';
 import { TextArea } from 'components/TextField';
 import Title from 'components/Title';
@@ -125,17 +126,27 @@ const Chat = () => {
 
     setListMessages((state) => state.filter((msg) => msg.id !== id));
   }, []);
-  const handleSubmit = React.useCallback(async () => {
+
+  const handleSendMessage = React.useCallback(
+    async (message: string) => {
+      if (selectedContact) {
+        const response = await postMessage({
+          de: user?.login || 'Not Identified',
+          para: selectedContact,
+          texto: message,
+        });
+
+        setListMessages((state) => [...state, ...response]);
+      }
+    },
+    [selectedContact, user?.login]
+  );
+
+  const handleSendTextMessage = React.useCallback(async () => {
     if (inputRef.current?.value && selectedContact) {
       const message = inputRef.current?.value;
 
-      const response = await postMessage({
-        de: user?.login || 'Not Identified',
-        para: selectedContact,
-        texto: message,
-      });
-
-      setListMessages((state) => [...state, ...response]);
+      await handleSendMessage(message);
 
       inputRef.current.value = '';
 
@@ -149,7 +160,14 @@ const Chat = () => {
       state: 'invalid',
       payload: 'userMessage',
     });
-  }, [errorsDispatch, selectedContact, user?.login]);
+  }, [errorsDispatch, handleSendMessage, selectedContact]);
+
+  const handleSendStickerMessage = React.useCallback(
+    async (stickerUrl: string) => {
+      await handleSendMessage(`:sticker: ${stickerUrl}`);
+    },
+    [handleSendMessage]
+  );
 
   return (
     <Styles.Container>
@@ -178,6 +196,7 @@ const Chat = () => {
             </Styles.EmptyFollowing>
           )}
         </Styles.Sidebar>
+
         <Styles.Header>
           <div>
             <Title as="h1">Chat</Title>
@@ -216,7 +235,16 @@ const Chat = () => {
                       onClick={() => handleDeleteMessage(message.id)}
                     />
                   </header>
-                  <p>{message.text}</p>
+                  {message.text.startsWith(':sticker:') ? (
+                    <p>
+                      <img
+                        src={message.text.replace(':sticker: ', '')}
+                        alt={message.text.replace(':sticker: ', '')}
+                      />
+                    </p>
+                  ) : (
+                    <p>{message.text}</p>
+                  )}
                 </Styles.ChatMessage>
               ))
             ) : (
@@ -241,15 +269,25 @@ const Chat = () => {
               if (event.key === 'Enter') {
                 event.preventDefault();
 
-                handleSubmit();
+                handleSendTextMessage();
               }
             }}
             handleOnChange={handleClearError}
             placeholder="Type our message here..."
+            disabled={!selectedContact}
             dimension="xs"
             ref={inputRef}
           />
-          <Button label="Send" dimension="xl" onClick={handleSubmit} />
+          <StickersButton
+            handleStickerSelected={handleSendStickerMessage}
+            disabled={!selectedContact}
+          />
+          <Button
+            label="Send"
+            dimension="xl"
+            disabled={!selectedContact}
+            onClick={handleSendTextMessage}
+          />
         </Styles.UserInputWrapper>
       </Styles.Content>
     </Styles.Container>

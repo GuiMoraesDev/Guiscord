@@ -89,6 +89,17 @@ export const Button = styled.button<ButtonDefaultPropsThatMakeStyles>`
         }
       `;
 
+    if (variant === 'secondary')
+      return css`
+        color: ${theme.colors.neutrals['900']};
+        background-color: ${theme.colors.secondary[600]};
+
+        &:hover {
+          color: ${theme.colors.neutrals['800']};
+          background-color: ${theme.colors.secondary[700]};
+        }
+      `;
+
     if (variant === 'outline')
       return css`
         color: ${theme.colors.neutrals['300']};

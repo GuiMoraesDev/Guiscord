@@ -5,6 +5,7 @@ import React from 'react';
 import axios, { CancelTokenSource } from 'axios';
 
 import Button from 'components/Button';
+import { Loading } from 'components/Loading';
 import Text from 'components/Text';
 import { TextArea } from 'components/TextField';
 import Title from 'components/Title';
@@ -12,6 +13,7 @@ import Title from 'components/Title';
 import { useAuth } from 'context/auth';
 
 import useErrors from 'hooks/useErrors';
+import useLoading from 'hooks/useLoading';
 
 import { FollowersDTO, getUserFollowers } from 'services/github/api.users';
 import {
@@ -27,6 +29,8 @@ const Chat = () => {
   const { user, clearUser } = useAuth();
   const router = useRouter();
 
+  const [loadingMessagesState, loadingMessagesDispatch] = useLoading();
+  const [loadingFollowersState, loadingFollowersDispatch] = useLoading();
   const [errorsState, errorsDispatch] = useErrors({
     userMessage: {
       message: 'Message is a required field',
@@ -50,16 +54,24 @@ const Chat = () => {
   }, [clearUser, router, user?.login]);
   React.useEffect(() => {
     const loadMessages = async () => {
+      loadingMessagesDispatch({
+        state: 'loading',
+      });
+
       const response = await getMessages(
         user?.login || '',
         selectedContact || ''
       );
 
       setListMessages(response);
+
+      loadingMessagesDispatch({
+        state: 'initial',
+      });
     };
 
     loadMessages();
-  }, [selectedContact, user?.login]);
+  }, [loadingMessagesDispatch, selectedContact, user?.login]);
   React.useEffect(() => {
     const getUserFollowersCancelToken = axios.CancelToken.source();
 
@@ -67,6 +79,10 @@ const Chat = () => {
       getUserFollowersCancelToken: CancelTokenSource
     ) => {
       if (!user?.login) return;
+
+      loadingFollowersDispatch({
+        state: 'loading',
+      });
 
       const response = await getUserFollowers(
         {
@@ -76,6 +92,10 @@ const Chat = () => {
       );
 
       setListFollowers(response.data);
+
+      loadingFollowersDispatch({
+        state: 'initial',
+      });
     };
 
     loadFollowers(getUserFollowersCancelToken);
@@ -83,7 +103,7 @@ const Chat = () => {
     return () => {
       getUserFollowersCancelToken.cancel();
     };
-  }, [user?.login]);
+  }, [loadingFollowersDispatch, user?.login]);
 
   const handleLogout = React.useCallback(() => {
     clearUser();
@@ -131,19 +151,23 @@ const Chat = () => {
     <Styles.Container>
       <Styles.Content>
         <Styles.Sidebar>
-          {listFollowers.map((follower) => (
-            <Styles.FollowerCard
-              key={follower.login}
-              selected={selectedContact === follower.login}
-              onClick={() => setSelectedContact(follower.login)}
-            >
-              <img
-                src={`https://github.com/${follower.login}.png`}
-                alt={follower.login}
-              />
-              <strong>{follower.login}</strong>
-            </Styles.FollowerCard>
-          ))}
+          {loadingFollowersState.loading ? (
+            <Loading status={loadingFollowersState} />
+          ) : (
+            listFollowers.map((follower) => (
+              <Styles.FollowerCard
+                key={follower.login}
+                selected={selectedContact === follower.login}
+                onClick={() => setSelectedContact(follower.login)}
+              >
+                <img
+                  src={`https://github.com/${follower.login}.png`}
+                  alt={follower.login}
+                />
+                <strong>{follower.login}</strong>
+              </Styles.FollowerCard>
+            ))
+          )}
         </Styles.Sidebar>
         <Styles.Header>
           <div>
@@ -162,26 +186,30 @@ const Chat = () => {
         </Styles.Header>
 
         <Styles.ChatWrapper>
-          {listMessages.map((message) => (
-            <Styles.ChatMessage key={message.id}>
-              <header>
-                <img
-                  src={`https://github.com/${message.from}.png`}
-                  alt={message.from}
-                />
-                <strong>{message.from}</strong>
+          {loadingMessagesState.loading ? (
+            <Loading status={loadingMessagesState} />
+          ) : (
+            listMessages.map((message) => (
+              <Styles.ChatMessage key={message.id}>
+                <header>
+                  <img
+                    src={`https://github.com/${message.from}.png`}
+                    alt={message.from}
+                  />
+                  <strong>{message.from}</strong>
 
-                <Button
-                  className="removeMessage"
-                  icon="FaTimes"
-                  variant="neutral"
-                  dimension="square"
-                  onClick={() => handleDeleteMessage(message.id)}
-                />
-              </header>
-              <p>{message.text}</p>
-            </Styles.ChatMessage>
-          ))}
+                  <Button
+                    className="removeMessage"
+                    icon="FaTimes"
+                    variant="neutral"
+                    dimension="square"
+                    onClick={() => handleDeleteMessage(message.id)}
+                  />
+                </header>
+                <p>{message.text}</p>
+              </Styles.ChatMessage>
+            ))
+          )}
         </Styles.ChatWrapper>
 
         <Styles.UserInputWrapper>

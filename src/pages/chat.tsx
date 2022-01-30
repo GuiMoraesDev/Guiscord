@@ -44,6 +44,12 @@ const Chat = () => {
   const handleLogout = React.useCallback(() => {
     signOut();
   }, [signOut]);
+  const handleClearError = React.useCallback(() => {
+    setError((errorsState) => ({
+      ...errorsState,
+      userMessage: { ...errorsState.userMessage, isValid: true },
+    }));
+  }, []);
   const handleSubmit = React.useCallback(() => {
     if (inputRef.current?.value) {
       const message = inputRef.current?.value;
@@ -60,7 +66,7 @@ const Chat = () => {
 
     return setError((errorsState) => ({
       ...errorsState,
-      userMessage: { ...errorsState.username, isValid: false },
+      userMessage: { ...errorsState.userMessage, isValid: false },
     }));
   }, [generateMessageMetadata, user?.name]);
 
@@ -106,6 +112,7 @@ const Chat = () => {
                 handleSubmit();
               }
             }}
+            handleOnChange={handleClearError}
             placeholder="Type our message here..."
             dimension="xs"
             ref={inputRef}

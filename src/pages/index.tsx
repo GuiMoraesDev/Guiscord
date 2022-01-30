@@ -49,7 +49,7 @@ const Login = () => {
           <Button
             as="button"
             label="Login"
-            size="md"
+            dimension="md"
             fullWidth
             rounded="sm"
             onClick={handleGoToChat}
@@ -59,7 +59,7 @@ const Login = () => {
             <Button
               as="a"
               variant="outline"
-              size="square"
+              dimension="square"
               rounded="full"
               icon="FaGithub"
               href="https://github.com/GuiMoraesDev/guiscord"
@@ -67,7 +67,7 @@ const Login = () => {
             <Button
               as="a"
               variant="outline"
-              size="square"
+              dimension="square"
               rounded="full"
               icon="FaTwitter"
               href="https://twitter.com/GuiMoraesDev"
@@ -75,7 +75,7 @@ const Login = () => {
             <Button
               as="a"
               variant="outline"
-              size="square"
+              dimension="square"
               rounded="full"
               icon="FaLinkedin"
               href="https://www.linkedin.com/in/guimoraesdev/"

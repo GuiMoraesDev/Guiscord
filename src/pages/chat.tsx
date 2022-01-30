@@ -106,6 +106,7 @@ const Chat = () => {
                 handleSubmit();
               }
             }}
+            placeholder="Type our message here..."
             dimension="xs"
             ref={inputRef}
           />

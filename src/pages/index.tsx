@@ -62,7 +62,7 @@ const Login = () => {
     <Styles.Container>
       <Styles.Content>
         <Styles.Form>
-          <Title as="h2">Boas vindas de volta!</Title>
+          <Title as="h2">Welcome!</Title>
           <Text as="p">{appConfig.name}</Text>
 
           <Input

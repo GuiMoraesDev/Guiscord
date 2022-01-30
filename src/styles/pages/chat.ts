@@ -168,11 +168,18 @@ export const FollowingCard = styled.div<IFollowingCardProps>`
 
   padding: ${({ theme }) => theme.spaces.x2};
 
+  border: 1px solid ${({ theme }) => theme.colors.transparent};
   border-radius: ${({ theme }) => theme.rounded.sm};
 
   overflow: hidden;
 
   transition: border ${({ theme }) => theme.transition.slow};
+
+  cursor: pointer;
+
+  :hover {
+    border-color: ${({ theme }) => theme.colors.primary[200]};
+  }
 
   :not(:first-of-type, :last-of-type) {
     margin: ${({ theme }) => theme.spaces.x2} 0;
@@ -181,7 +188,7 @@ export const FollowingCard = styled.div<IFollowingCardProps>`
   ${({ selected, theme }) =>
     selected &&
     css`
-      border: 1px solid ${theme.colors.alert.success};
+      border-color: ${theme.colors.primary[600]};
     `}
 
   > img {

@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import React from 'react';
 
 import { uniqueId } from 'lodash';
@@ -20,7 +22,8 @@ interface IMessageProps {
 }
 
 const Chat = () => {
-  const { user, signOut } = useAuth();
+  const { user, clearUser } = useAuth();
+  const router = useRouter();
 
   const [errorsState, errorsDispatch] = useErrors({
     userMessage: {
@@ -43,8 +46,10 @@ const Chat = () => {
     []
   );
   const handleLogout = React.useCallback(() => {
-    signOut();
-  }, [signOut]);
+    clearUser();
+
+    router.push('/');
+  }, [clearUser, router]);
   const handleClearError = React.useCallback(() => {
     errorsDispatch({
       state: 'valid',

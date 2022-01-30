@@ -18,7 +18,7 @@ import useErrors from 'hooks/useErrors';
 import * as Styles from 'styles/pages/index';
 
 const Login = () => {
-  const { user, signIn } = useAuth();
+  const { user, setUser, clearUser } = useAuth();
   const router = useRouter();
 
   const [errorsState, errorsDispatch] = useErrors({
@@ -45,17 +45,17 @@ const Login = () => {
   const handleUsername = React.useCallback(
     (value) => {
       if (!value) {
-        return;
+        return clearUser();
       }
 
-      signIn({ username: value });
+      setUser({ username: value });
 
       return errorsDispatch({
         state: 'valid',
         payload: 'username',
       });
     },
-    [errorsDispatch, signIn]
+    [clearUser, errorsDispatch, setUser]
   );
 
   return (

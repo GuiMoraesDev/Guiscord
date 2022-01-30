@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 import React from 'react';
 
 import axios from 'axios';
@@ -8,8 +6,8 @@ import { getUser, ISignInDTO, UserDTO } from 'services/github/api.users';
 
 interface IAuthContextData {
   user: UserDTO | null;
-  signIn({ username }: ISignInDTO): Promise<() => void>;
-  signOut(): void;
+  setUser({ username }: ISignInDTO): Promise<() => void>;
+  clearUser(): void;
 }
 
 const AuthContext = React.createContext<IAuthContextData>(
@@ -17,10 +15,9 @@ const AuthContext = React.createContext<IAuthContextData>(
 );
 
 const AuthProvider: React.FC = ({ children }) => {
-  const router = useRouter();
   const [data, setData] = React.useState<UserDTO | null>(null);
 
-  const signIn = React.useCallback(
+  const setUser = React.useCallback(
     async ({ username }): Promise<() => void> => {
       const getUserCancelToken = axios.CancelToken.source();
 
@@ -33,17 +30,16 @@ const AuthProvider: React.FC = ({ children }) => {
     []
   );
 
-  const signOut = React.useCallback(() => {
+  const clearUser = React.useCallback(() => {
     setData(null);
-    router.push('/');
-  }, [router]);
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
         user: data,
-        signIn,
-        signOut,
+        setUser,
+        clearUser,
       }}
     >
       {children}

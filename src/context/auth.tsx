@@ -25,9 +25,7 @@ const AuthProvider: React.FC = ({ children }) => {
     if (user) {
       const parsedUser: UserDTO = JSON.parse(user);
 
-      return {
-        ...parsedUser,
-      };
+      return parsedUser;
     }
 
     return null;

@@ -6,7 +6,7 @@ interface IUseCookiesDTO {
   setItem: (key: string, value: string) => void;
 }
 
-const useCookies = (): IUseCookiesDTO | null => {
+const useCookies = (): IUseCookiesDTO => {
   const prefix = process.env.NEXT_PUBLIC_PROJECT_PREFIX || '';
 
   const getItem = (key: string) => {

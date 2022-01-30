@@ -4,8 +4,12 @@ import React from 'react';
 
 import axios, { CancelTokenSource } from 'axios';
 
+import newConversationAnimationData from 'assets/animations/new-conversation.json';
+import selectMessageAnimationData from 'assets/animations/select-message.json';
+
 import Button from 'components/Button';
 import { Loading } from 'components/Loading';
+import LootieImg from 'components/Lottie';
 import Text from 'components/Text';
 import { TextArea } from 'components/TextField';
 import Title from 'components/Title';
@@ -193,27 +197,39 @@ const Chat = () => {
         <Styles.ChatWrapper>
           {loadingMessagesState.loading ? (
             <Loading status={loadingMessagesState} />
-          ) : (
-            listMessages.map((message) => (
-              <Styles.ChatMessage key={message.id}>
-                <header>
-                  <img
-                    src={`https://github.com/${message.from}.png`}
-                    alt={message.from}
-                  />
-                  <strong>{message.from}</strong>
+          ) : selectedContact ? (
+            listMessages.length ? (
+              listMessages.map((message) => (
+                <Styles.ChatMessage key={message.id}>
+                  <header>
+                    <img
+                      src={`https://github.com/${message.from}.png`}
+                      alt={message.from}
+                    />
+                    <strong>{message.from}</strong>
 
-                  <Button
-                    className="removeMessage"
-                    icon="FaTimes"
-                    variant="neutral"
-                    dimension="square"
-                    onClick={() => handleDeleteMessage(message.id)}
-                  />
-                </header>
-                <p>{message.text}</p>
-              </Styles.ChatMessage>
-            ))
+                    <Button
+                      className="removeMessage"
+                      icon="FaTimes"
+                      variant="neutral"
+                      dimension="square"
+                      onClick={() => handleDeleteMessage(message.id)}
+                    />
+                  </header>
+                  <p>{message.text}</p>
+                </Styles.ChatMessage>
+              ))
+            ) : (
+              <Styles.EmptyMessages>
+                <LootieImg animationData={newConversationAnimationData} />
+                <strong>Send message to @{selectedContact}</strong>
+              </Styles.EmptyMessages>
+            )
+          ) : (
+            <Styles.EmptyMessages>
+              <LootieImg animationData={selectMessageAnimationData} />
+              <strong>Select a contact to start a new conversation</strong>
+            </Styles.EmptyMessages>
           )}
         </Styles.ChatWrapper>
 

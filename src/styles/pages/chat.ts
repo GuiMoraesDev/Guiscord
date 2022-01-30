@@ -221,6 +221,27 @@ export const EmptyFollowing = styled.div`
   }
 `;
 
+export const EmptyMessages = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  grid-gap: ${({ theme }) => theme.spaces.x4};
+
+  width: 40%;
+  height: 40%;
+
+  color: ${({ theme }) => theme.colors.neutrals[100]};
+
+  margin: auto;
+
+  > strong {
+    font-size: ${({ theme }) => theme.spaces.x4};
+    font-weight: 600;
+  }
+`;
+
 export const UserInputWrapper = styled.div`
   grid-area: UserInput;
 

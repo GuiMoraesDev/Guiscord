@@ -9,7 +9,7 @@ export interface ButtonDefaultPropsThatMakeStyles {
   fullWidth?: boolean;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'square';
   rounded?: keyof DefaultTheme['rounded'];
-  variant?: 'primary' | 'secondary' | 'outline' | 'neutral';
+  variant?: 'primary' | 'outline' | 'neutral';
   isDisabled: boolean;
   icon?: keyof typeof Icons;
 }

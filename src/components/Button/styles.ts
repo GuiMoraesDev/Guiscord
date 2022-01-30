@@ -101,5 +101,15 @@ export const Button = styled.button<ButtonDefaultPropsThatMakeStyles>`
           border-color: ${theme.colors.neutrals['100']};
         }
       `;
+
+    if (variant === 'neutral')
+      return css`
+        color: ${theme.colors.neutrals['300']};
+        background-color: ${theme.colors.transparent};
+
+        &:hover {
+          color: ${theme.colors.neutrals['100']};
+        }
+      `;
   }}
 `;

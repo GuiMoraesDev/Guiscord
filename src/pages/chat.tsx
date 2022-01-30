@@ -24,8 +24,8 @@ const Chat = () => {
             as="button"
             label="Logout"
             size="md"
-            fullWidth
             rounded="sm"
+            variant="neutral"
             onClick={handleLogout}
           />
         </Styles.Header>

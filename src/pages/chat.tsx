@@ -26,6 +26,7 @@ import {
   getMessages,
   IMessageProps,
   postMessage,
+  subscribeMessagesListener,
 } from 'services/supabase/api.messages';
 
 import * as Styles from 'styles/pages/chat';
@@ -49,6 +50,63 @@ const Chat = () => {
   );
   const [listMessages, setListMessages] = React.useState<IMessageProps[]>([]);
   const [listFollowing, setListFollowing] = React.useState<FollowingDTO[]>([]);
+
+  const handleLogout = React.useCallback(() => {
+    clearUser();
+
+    router.push('/');
+  }, [clearUser, router]);
+  const handleClearError = React.useCallback(() => {
+    errorsDispatch({
+      state: 'valid',
+      payload: 'userMessage',
+    });
+  }, [errorsDispatch]);
+  const handleDeleteMessage = React.useCallback(async (id: string) => {
+    await deleteMessage(id);
+
+    setListMessages((state) => state.filter((msg) => msg.id !== id));
+  }, []);
+  const handleSetMessage = React.useCallback((newMessage: IMessageProps) => {
+    setListMessages((state) => [...state, newMessage]);
+  }, []);
+  const handleSendMessage = React.useCallback(
+    async (message: string) => {
+      if (selectedContact) {
+        await postMessage({
+          de: user?.login || 'Not Identified',
+          para: selectedContact,
+          texto: message,
+        });
+      }
+    },
+    [selectedContact, user?.login]
+  );
+  const handleSendTextMessage = React.useCallback(async () => {
+    if (inputRef.current?.value && selectedContact) {
+      const message = inputRef.current?.value;
+
+      await handleSendMessage(message);
+
+      inputRef.current.value = '';
+
+      return errorsDispatch({
+        state: 'valid',
+        payload: 'userMessage',
+      });
+    }
+
+    return errorsDispatch({
+      state: 'invalid',
+      payload: 'userMessage',
+    });
+  }, [errorsDispatch, handleSendMessage, selectedContact]);
+  const handleSendStickerMessage = React.useCallback(
+    async (stickerUrl: string) => {
+      await handleSendMessage(`:sticker: ${stickerUrl}`);
+    },
+    [handleSendMessage]
+  );
 
   React.useEffect(() => {
     if (!user?.login) {
@@ -77,6 +135,9 @@ const Chat = () => {
 
     loadMessages();
   }, [loadingMessagesDispatch, selectedContact, user?.login]);
+  React.useEffect(() => {
+    subscribeMessagesListener({ handleSetMessage });
+  }, [handleSetMessage]);
   React.useEffect(() => {
     const getUserFollowingCancelToken = axios.CancelToken.source();
 
@@ -109,65 +170,6 @@ const Chat = () => {
       getUserFollowingCancelToken.cancel();
     };
   }, [loadingFollowingDispatch, user?.login]);
-
-  const handleLogout = React.useCallback(() => {
-    clearUser();
-
-    router.push('/');
-  }, [clearUser, router]);
-  const handleClearError = React.useCallback(() => {
-    errorsDispatch({
-      state: 'valid',
-      payload: 'userMessage',
-    });
-  }, [errorsDispatch]);
-  const handleDeleteMessage = React.useCallback(async (id: string) => {
-    await deleteMessage(id);
-
-    setListMessages((state) => state.filter((msg) => msg.id !== id));
-  }, []);
-
-  const handleSendMessage = React.useCallback(
-    async (message: string) => {
-      if (selectedContact) {
-        const response = await postMessage({
-          de: user?.login || 'Not Identified',
-          para: selectedContact,
-          texto: message,
-        });
-
-        setListMessages((state) => [...state, ...response]);
-      }
-    },
-    [selectedContact, user?.login]
-  );
-
-  const handleSendTextMessage = React.useCallback(async () => {
-    if (inputRef.current?.value && selectedContact) {
-      const message = inputRef.current?.value;
-
-      await handleSendMessage(message);
-
-      inputRef.current.value = '';
-
-      return errorsDispatch({
-        state: 'valid',
-        payload: 'userMessage',
-      });
-    }
-
-    return errorsDispatch({
-      state: 'invalid',
-      payload: 'userMessage',
-    });
-  }, [errorsDispatch, handleSendMessage, selectedContact]);
-
-  const handleSendStickerMessage = React.useCallback(
-    async (stickerUrl: string) => {
-      await handleSendMessage(`:sticker: ${stickerUrl}`);
-    },
-    [handleSendMessage]
-  );
 
   return (
     <Styles.Container>

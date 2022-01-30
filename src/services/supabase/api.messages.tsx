@@ -18,6 +18,28 @@ export interface IMessageProps {
   created_at: Date;
 }
 
+interface ISubscribeMessagesListenerProps {
+  handleSetMessage: (msgData: IMessageProps) => void;
+}
+
+const subscribeMessagesListener = ({
+  handleSetMessage,
+}: ISubscribeMessagesListenerProps) => {
+  return supabaseClient
+    .from<ISupabaseMessageProps>('mensagens')
+    .on('INSERT', (data) => {
+      const msg: IMessageProps = {
+        id: data.new.id,
+        from: data.new.de,
+        to: data.new.para,
+        text: data.new.texto,
+        created_at: data.new.created_at,
+      };
+      handleSetMessage(msg);
+    })
+    .subscribe();
+};
+
 const getMessages = async (
   username: string,
   contact: string
@@ -78,4 +100,4 @@ const deleteMessage = async (id: string): Promise<IMessageProps[]> => {
   return parseResponse;
 };
 
-export { getMessages, postMessage, deleteMessage };
+export { subscribeMessagesListener, getMessages, postMessage, deleteMessage };

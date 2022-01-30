@@ -40,6 +40,7 @@ const StickersButton = ({
         variant="secondary"
         dimension="square"
         rounded="full"
+        disabled={disabled}
         onClick={() => !disabled && handleToggleIsOpen()}
         label="😋"
       />
